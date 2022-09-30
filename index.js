@@ -6,9 +6,9 @@ const app = express();
 const http = require('http').createServer(app);
 const MongoStore = require('connect-mongo');
 const routes=require('./routes/routes')
-const auth=require('./utilities/auth')
+const { auth,ensureAuthenticated } = require('./utilities/auth.js');
 const mongoose=require('mongoose');
-const { auth,ensureAuthenticated } = require('passport');
+
 
 /*APP FILE STRUCTURE*/
 /*
@@ -24,8 +24,6 @@ app.set('view engine', 'pug');
 app.use('/public', express.static(process.cwd() + '/public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(passport.initialize()); 
-app.use(passport.session());
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave:false,
@@ -36,14 +34,16 @@ app.use(session({
     })
   })
 );
+app.use(passport.initialize()); 
+app.use(passport.session());
 
-mongoose.connect(process.env.MONGO_LOCAL,{dbName:'proto-chat'}).then(
+mongoose.connect(process.env.MONGO_URI,{dbName:'proto-chat'}).then(
   ()=>{
     console.log('Successfully connected to MongoDB')
   }).catch(
     (err)=>{
       console.log('Error connecting to MongoDB!');
-        next('error connecting to DB '+err)
+        
     })
 
 auth(app)
