@@ -1,19 +1,59 @@
+const passport = require('passport');
+const { ensureAuthenticated , signUp } = require('../utilities/auth.js');
+
 function routes(app) {
     app.get('/',(req,res)=>{
         res.redirect('/login')
     })
     
+    /*use my own message handler instead of passportJS provided (which is clunky and I havent research enough to make it work). 
+    Put all messages (ie for login and signup route) under req.session.message(not messages as this is used by passportJS 
+    for failureMessage option). Clear message property after every render so when client manually navigate to routes, previous message don't appear.
+    */
+
     app.get('/login',(req,res)=>{
-        res.render('login')
+        let message=req.session.message && req.session.message.login? req.session.message.login:null;
+        res.render('login',{message},function(err,html){
+            if (req.session.message && req.session.message.login)
+                req.session.message.login=null; //clear message handler to prevent unexpected behaviours
+            res.send(html);
+        })
     })
     
     app.get('/signup',(req,res)=>{
-        res.render('signup')
-    })
-    //routes catch all
-        app.use('/',(req,res)=>{
-            res.status(404).send("Sorry can't find that!")
+        let message=req.session.message && req.session.message.signup? req.session.message.signup:null;
+        res.render('signup',{message},function(err,html){
+            if (req.session.message && req.session.message.signup)
+                req.session.message.signup=null; //clear message handler to prevent unexpected behaviours
+           
+            res.send(html);
         })
+    })
+
+    app.get('/chat',(req,res)=>{
+        let message=req.session.message && req.session.message.chat? req.session.message.chat:null;
+        res.render('chat',{message},function(err,html){
+            if (req.session.message && req.session.message.chat)
+                req.session.message.chat=null; //clear message handler to prevent unexpected behaviours
+            res.send(html);
+        })
+    })
+
+    app.post('/login',passport.authenticate('local',{
+        failureRedirect:'/login'
+    }),function(req, res) {
+        req.session.message={chat:'Successfully Logged In'} /*put message handler here and not in passport verify function because 
+        somehow it destroys the property i set for message when cb is called*/
+        res.redirect('/chat')
+    })
+    
+
+    app.post('/signup',signUp)
+
+    //routes catch all
+    app.use('/',(req,res)=>{
+        res.status(404).send("Sorry can't find that!")
+    })
     
     //error handler
     app.use((err,req,res,next)=>{
