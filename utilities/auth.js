@@ -7,6 +7,7 @@ function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
         }
+    req.session.message={login:'Please authenticate'}//message handler
     res.redirect('/login');
     }
 
@@ -14,7 +15,7 @@ async function signUp(req,res,next) {
     try {
         const user=await UserModel.findOne({username:req.body.username})
         if (user) {
-            req.session.message={signup:['Username already exist. Choose another username']}
+            req.session.message={signup:'Username already exist. Choose another username'}//message handler
             res.redirect('/signup')
         } else {
             let newUser = new UserModel({
@@ -22,18 +23,15 @@ async function signUp(req,res,next) {
                 password:bcrypt.hashSync(req.body.password,12)
             })
             await newUser.save();
-            req.session.message={signup:['Signup successful. Please Login']}
+            req.session.message={signup:'Signup successful. Please Login'}//message handler
             res.redirect('/login')
-            
         }
     } catch(err) {
         next(err)
     }
-    
 }
 
 function auth(app) {
-
     passport.serializeUser((user, done) => {
         done(null, user._id);
     });

@@ -6,9 +6,10 @@ function routes(app) {
         res.redirect('/login')
     })
     
-    /*use my own message handler instead of passportJS provided (which is clunky and I havent research enough to make it work). 
-    Put all messages (ie for login and signup route) under req.session.message(not messages as this is used by passportJS 
-    for failureMessage option). Clear message property after every render so when client manually navigate to routes, previous message don't appear.
+    /*use my own (very convenient!) message handler instead of passportJS provided (which is clunky and I havent research enough to 
+        make it work). Put all messages (ie for login and signup route) under req.session.message(not messages as this is used by passportJS 
+        for failureMessage option). Clear message property after every render so when client manually navigate to routes, 
+        previous message don't appear.
     */
 
     app.get('/login',(req,res)=>{
@@ -30,13 +31,22 @@ function routes(app) {
         })
     })
 
-    app.get('/chat',(req,res)=>{
+    app.get('/chat',ensureAuthenticated,(req,res)=>{
         let message=req.session.message && req.session.message.chat? req.session.message.chat:null;
         res.render('chat',{message},function(err,html){
             if (req.session.message && req.session.message.chat)
                 req.session.message.chat=null; //clear message handler to prevent unexpected behaviours
             res.send(html);
         })
+    })
+
+    app.get('/logout',(req,res,next)=>{
+        req.logout(function(err){
+            if (err) next(err) 
+            req.session.message={login:'Logout.'} //message handler
+            res.redirect('/login')
+        })
+        
     })
 
     app.post('/login',passport.authenticate('local',{

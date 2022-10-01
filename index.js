@@ -6,7 +6,7 @@ const app = express();
 const http = require('http').createServer(app);
 const MongoStore = require('connect-mongo');
 const routes=require('./routes/routes')
-const { auth,ensureAuthenticated } = require('./utilities/auth.js');
+const { auth } = require('./utilities/auth.js');
 const mongoose=require('mongoose');
 
 
