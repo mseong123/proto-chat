@@ -86,6 +86,7 @@ function auth(app) {
             }})
             console.log('profileid '+profile.id)
             console.log(typeof profile.id)
+            console.log(user)
             if (!user) {
                 // The account at Google has not logged in to this app before.  Create a
                 // new user record and associate it with the Google account.
