@@ -26,7 +26,17 @@ function routes(app) {
     app.get('/auth/google/callback',passport.authenticate('google', { 
         failureRedirect: '/login'
      }), (req, res) => {
-        req.session.message={chat:'Successfully Logged In'} /*put message handler here and not in passport verify function because 
+        req.session.message={chat:'Successfully Logged In with Google'} /*put message handler here and not in passport verify function because 
+        somehow it destroys the property i set for message when cb is called*/
+        res.redirect('/chat')
+    });
+
+    app.get('/auth/facebook',passport.authenticate('facebook'));
+
+    app.get('/auth/facebook/callback',passport.authenticate('facebook', { 
+        failureRedirect: '/login'
+     }), (req, res) => {
+        req.session.message={chat:'Successfully Logged In with Facebook'} /*put message handler here and not in passport verify function because 
         somehow it destroys the property i set for message when cb is called*/
         res.redirect('/chat')
     });

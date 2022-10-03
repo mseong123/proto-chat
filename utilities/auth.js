@@ -2,6 +2,7 @@ require('dotenv').config();
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const GoogleStrategy = require('passport-google-oauth20');
+const FacebookStrategy = require('passport-facebook');
 const bcrypt=require('bcrypt');
 const UserModel=require('./db.js')
 
@@ -103,6 +104,40 @@ function auth(app) {
         }    
     })
     )
+
+    passport.use(new FacebookStrategy({
+        clientID: process.env.FACEBOOK_CLIENT_ID,
+        clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+        callbackURL: 'https://proto-chat.onrender.com/auth/facebook/callback',
+      },
+      async function (accessToken, refreshToken, profile, done) {
+        try {
+            console.log(profile)
+            const user=await UserModel.findOne({ facebook:{
+                id:profile.id
+            }})
+            if (!user) {
+                // The account at Facebook has not logged in to this app before.  Create a
+                // new user record and associate it with the Facebook account.
+                let user=UserModel({facebook:{
+                    id:profile.id,
+                    displayName:profile.displayName,
+                    photos:profile.photos
+                }})
+                await user.save();
+                return done(null,user)
+            } else {
+                return done(null,user)
+            }
+
+        } catch(err) {
+            console.log('database error '+err)
+            done(err)
+        }    
+    })
+    )
+
+
 }
 
 module.exports = {
