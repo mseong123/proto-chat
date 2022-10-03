@@ -81,13 +81,13 @@ function auth(app) {
       async function (accessToken, refreshToken, profile, done) {
         try {
             console.log('hello')
-            const user=await UserModel.findOne({ google:{
+            const user1=await UserModel.findOne({ google:{
                 id:profile.id
             }})
             console.log('profileid '+profile.id)
             console.log(typeof profile.id)
-            console.log(user)
-            if (!user) {
+            console.log(user1)
+            if (!user1) {
                 // The account at Google has not logged in to this app before.  Create a
                 // new user record and associate it with the Google account.
                 let user=UserModel({google:{
@@ -95,9 +95,9 @@ function auth(app) {
                     displayName:profile.displayName,
                 }})
                 await user.save();
-                return done(null,user)
+                return done(null,user1)
             } else {
-                return done(null,user)
+                return done(null,user1)
             }
 
         } catch(err) {
@@ -118,7 +118,7 @@ function auth(app) {
             const user=await UserModel.findOne({ facebook:{
                 id:profile.id
             }})
-            
+
             if (!user) {
                 // The account at Facebook has not logged in to this app before.  Create a
                 // new user record and associate it with the Facebook account.
