@@ -81,13 +81,13 @@ function auth(app) {
       async function (accessToken, refreshToken, profile, done) {
         try {
             console.log('hello')
-            const user1=await UserModel.findOne({ google:{
-                id:profile.id
+            const user=await UserModel.findOne({ google:{
+                id:profile.displayName
             }})
             console.log('profileid '+profile.id)
-            console.log(typeof profile.id)
+            console.log(typeof profile.displayName)
             console.log(user1)
-            if (!user1) {
+            if (!user) {
                 // The account at Google has not logged in to this app before.  Create a
                 // new user record and associate it with the Google account.
                 let user=UserModel({google:{
@@ -95,9 +95,9 @@ function auth(app) {
                     displayName:profile.displayName,
                 }})
                 await user.save();
-                return done(null,user1)
+                return done(null,user)
             } else {
-                return done(null,user1)
+                return done(null,user)
             }
 
         } catch(err) {
