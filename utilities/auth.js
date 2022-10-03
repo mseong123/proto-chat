@@ -114,11 +114,11 @@ function auth(app) {
       },
       async function (accessToken, refreshToken, profile, done) {
         try {
-            console.log(profile)
+            
             const user=await UserModel.findOne({ facebook:{
                 id:profile.id
-            }}).exec()
-            console.log(user)
+            }})
+            
             if (!user) {
                 // The account at Facebook has not logged in to this app before.  Create a
                 // new user record and associate it with the Facebook account.
