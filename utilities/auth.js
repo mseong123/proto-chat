@@ -80,7 +80,7 @@ function auth(app) {
       },
       async function (accessToken, refreshToken, profile, done) {
         try {
-            console.log(profile)
+            console.log('hello')
             const user=await UserModel.findOne({ google:{
                 id:profile.id
             }})
