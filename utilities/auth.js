@@ -115,7 +115,7 @@ function auth(app) {
             console.log(profile)
             const user=await UserModel.findOne({ 
                 'facebook.id':profile.id
-            }})
+            })
 
             if (!user) {
                 // The account at Facebook has not logged in to this app before.  Create a
