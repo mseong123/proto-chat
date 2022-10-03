@@ -88,7 +88,8 @@ function auth(app) {
                 // new user record and associate it with the Google account.
                 let user=UserModel({google:{
                     id:profile.id,
-                    displayName:profile.displayName
+                    displayName:profile.displayName,
+                    photos:profile.photos
                 }})
                 await user.save();
                 return done(null,user)
