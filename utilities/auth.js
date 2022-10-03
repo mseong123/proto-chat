@@ -82,7 +82,7 @@ function auth(app) {
         try {
             console.log('hello')
             const user=await UserModel.findOne({ google:{
-                id:profile.displayName
+                displayName:profile.displayName
             }})
             console.log('profileid '+profile.id)
             console.log(typeof profile.displayName)
