@@ -20,6 +20,17 @@ function routes(app) {
             res.send(html);
         })
     })
+
+    app.get('/auth/google',passport.authenticate('google'));
+
+    app.get('/auth/google/callback',passport.authenticate('google', { 
+        failureRedirect: '/login'
+     }), (req, res) => {
+        req.session.message={chat:'Successfully Logged In'} /*put message handler here and not in passport verify function because 
+        somehow it destroys the property i set for message when cb is called*/
+        res.redirect('/chat')
+    });
+
     
     app.get('/signup',(req,res)=>{
         let message=req.session.message && req.session.message.signup? req.session.message.signup:null;

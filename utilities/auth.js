@@ -1,5 +1,6 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
+const GoogleStrategy = require('passport-google-oauth20');
 const bcrypt=require('bcrypt');
 const UserModel=require('./db.js')
 
@@ -67,6 +68,38 @@ function auth(app) {
             }    
         }
     ));
+
+    passport.use(new GoogleStrategy({
+        clientID: GOOGLE_CLIENT_ID,
+        clientSecret: GOOGLE_CLIENT_SECRET,
+        callbackURL: 'https://proto-chat.onrender.com/auth/google/callback',
+        scope: [ 'profile' ],
+        state: true
+      },
+      async function (accessToken, refreshToken, profile, done) {
+        try {
+            const user=await UserModel.findOne({ google:{
+                id:profile.id
+            }})
+            if (!user) {
+                // The account at Google has not logged in to this app before.  Create a
+                // new user record and associate it with the Google account.
+                let user=UserModel({google:{
+                    id:profile.id,
+                    displayName:profile.displayName
+                }})
+                await user.save();
+                return done(null,user)
+            } else {
+                return done(null,user)
+            }
+
+        } catch(err) {
+            console.log('database error '+err)
+            done(err)
+        }    
+    })
+    )
 }
 
 module.exports = {
