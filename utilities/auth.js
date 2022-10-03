@@ -80,9 +80,10 @@ function auth(app) {
       },
       async function (accessToken, refreshToken, profile, done) {
         try {
-            console.log('hello')
+            console.log(profile)
             const user=await UserModel.findOne({
-                'google.id':profile.id})
+                'google.id':profile.id
+            })
             
             if (!user) {
                 // The account at Google has not logged in to this app before.  Create a
@@ -111,9 +112,9 @@ function auth(app) {
       },
       async function (accessToken, refreshToken, profile, done) {
         try {
-            
-            const user=await UserModel.findOne({ facebook:{
-                id:profile.id
+            console.log(profile)
+            const user=await UserModel.findOne({ 
+                'facebook.id':profile.id
             }})
 
             if (!user) {
