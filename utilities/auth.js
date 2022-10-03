@@ -90,7 +90,6 @@ function auth(app) {
                 let user=UserModel({google:{
                     id:profile.id,
                     displayName:profile.displayName,
-                    photos:profile.photos
                 }})
                 await user.save();
                 return done(null,user)
@@ -122,7 +121,6 @@ function auth(app) {
                 let user=UserModel({facebook:{
                     id:profile.id,
                     displayName:profile.displayName,
-                    photos:profile.photos
                 }})
                 await user.save();
                 return done(null,user)
