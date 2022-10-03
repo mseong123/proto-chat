@@ -6,7 +6,7 @@ const userSchema=new mongoose.Schema({
     google:{
         id:String,
         displayName:String,
-        photos:String
+        photos:Array
     },
     facebook:{
         id:String,
