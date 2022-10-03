@@ -84,6 +84,7 @@ function auth(app) {
             const user=await UserModel.findOne({ google:{
                 id:profile.id
             }}).exec()
+            console.log(user)
             if (!user) {
                 // The account at Google has not logged in to this app before.  Create a
                 // new user record and associate it with the Google account.
@@ -115,6 +116,7 @@ function auth(app) {
             const user=await UserModel.findOne({ facebook:{
                 id:profile.id
             }}).exec()
+            console.log(user)
             if (!user) {
                 // The account at Facebook has not logged in to this app before.  Create a
                 // new user record and associate it with the Facebook account.
