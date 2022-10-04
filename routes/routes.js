@@ -52,9 +52,14 @@ function routes(app) {
         })
     })
 
-    app.get('/chat',ensureAuthenticated,(req,res)=>{
+    app.get('/chat',ensureAuthenticated,(req,res,next)=>{
+        
         let message=req.session.message && req.session.message.chat? req.session.message.chat:null;
-        res.render('chat',{message},function(err,html){
+        res.render('chat',{
+            message,
+            chat:req.user.private
+        },function(err,html){
+            if (err) next(err)
             if (req.session.message && req.session.message.chat)
                 req.session.message.chat=null; //clear message handler to prevent unexpected behaviours
             res.send(html);

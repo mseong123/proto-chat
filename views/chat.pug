@@ -3,5 +3,19 @@ html
     include shared/head.pug
     body
         h1 Chat
+        div
+            div.list-group#user-list
+            each value in chat
+                button(id='user'+value._id).list-group-item value.nickname
+                    span(id='online-offline'+value._id).badge.badge-primary.badge-pill offline
+        
+
+
+
+
+
+
         a(href='/logout') Logout 
         p #{message}
+        script(src='/socket.io/socket.io.js')
+        script(src='/public/script.js')

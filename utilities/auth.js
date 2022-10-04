@@ -40,7 +40,7 @@ function auth(app) {
     });
     passport.deserializeUser(async(id, done) => {
         try {
-            const user = await UserModel.findOne({ _id: id });
+            const user = await UserModel.findOne({ _id: id }).select('-password');
             done(null, user);
         } catch(err) {
             console.log('database error '+err)
