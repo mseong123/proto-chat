@@ -41,27 +41,17 @@ app.use(sessionMiddleware);
 app.use(passport.initialize()); 
 app.use(passport.session());
 
-/*The following middleware wrapper codes ALL HAVE TO BE INCLUDED (as per passportsocketio doc) in order to access req.user data under 
-socket.request during websocket request/response. Spent alot of time and can't really do anything else. Don't really understand mechanics under the hood but 
-when i tried to set up my own socket.io middleware to put req.user data under socket instance, socket can't connect from client at all (and
-  as a result keep trying to reconnect). 
-
-*/
-const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
-io.use(wrap(sessionMiddleware)) //have to include all, ie if i leave this wrapper out doesn't work. 
-io.use(wrap(passport.initialize()))
-io.use(wrap(passport.session()));
-
-//can't think of many use case for the below, ie only 1 i can think of is clear cookie during chat session.
-io.use((socket, next) => {
-  if (socket.request.user) {
-    next();
-  } else {
-    next(new Error('unauthorized'))
-  }
-});
-
-//until here
+/*Created my own middleware which attach req.user to socket instance (socket.request.user) and mimick whats in 
+https://github.com/jfromaniello/passport.socketio/issues/148 which wraps around session and passport. Reason why i don't
+use that is don't quite understand detailed mechanics of it other than being able to do what my middleware do below. Also
+not sure how session would work under websocket (need to explore further next time)*/
+app.use((req,res,next)=>{
+  io.use((socket,socketNext)=>{
+    socket.request.user=req.user;
+    socketNext()
+  })
+  next();
+})
 
 mongoose.connect(process.env.MONGO_URI,{dbName:'proto-chat'}).then(
   ()=>{
@@ -75,9 +65,6 @@ mongoose.connect(process.env.MONGO_URI,{dbName:'proto-chat'}).then(
 auth(app)
 routes(app)
 socketServer(io)
-
-
-
 
 http.listen(process.env.PORT || 3000, () => {
   console.log('Listening on port ' + process.env.PORT || 3000);
