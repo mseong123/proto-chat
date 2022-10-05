@@ -55,9 +55,11 @@ function routes(app) {
     app.get('/chat',ensureAuthenticated,(req,res,next)=>{
         
         let message=req.session.message && req.session.message.chat? req.session.message.chat:null;
+        
         res.render('chat',{
             message,
-            chat:req.user.private
+            nickname:req.user.nickname,
+            private:req.user.private
         },function(err,html){
             if (err) next(err)
             if (req.session.message && req.session.message.chat)

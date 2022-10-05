@@ -1,13 +1,31 @@
+/*****EVENT LISTENERS****/
 
 
+
+
+
+
+/*****SOCKET-IO******/
 let socket = io();
+let _id; //keep global _id state for usage
 
 //set up the only error listener for server errors
 socket.on("connect_error", (err) => {
   console.log(`connect_error due to ${err.message}`);
 });
 
-socket.on('connect',()=>console.log('connect'))
+socket.on('connect',()=>{
+  console.log('connect')
+})
+
+socket.on('_id',(userID)=>{
+  _id=userID//assignment of _id happens when connected by server
+})
+
+
+
+
+
 socket.on('disconnect',()=>{
   /*socket.disconnect() is extremely important. For WHATEVER REASON (ie client script error - see below* for writeup or other server errors) 
   which result in socket connection dropping, socket.io's default behavior for client is to create new socket and reconnecting to server. 
@@ -23,42 +41,35 @@ socket.on('disconnect',()=>{
   console.log('disconnect')}
   )
 
-socket.on('online',(allSockets)=>{
-/*ie *if i have a script error here,socket.io can't proceed and execute and will attempt new connection to server then server will send
-send something on 'connection' using the 'online' event and reach here and script executes and error again and the infinite loop repeats! 
-Hence use socket.disconnect above.
-*/
-
-
-
-  console.log(allSockets)
- 
-  /*
-  allSockets.forEach((socket)=>{
-    const user=document.getElementById('user'+socket.id)
-
-    if (!user) {
-      const badge = document.createElement("span").setAttribute('id','online'+socket.id);
-      badge.classList.add("badge","badge-primary","badge-pill");
-      console.log('badge')
-      console.log(badge)
+  socket.on('online',(allSockets)=>{
+    /*ie *if i have a script error here,socket.io can't proceed and execute and will attempt new connection to server then server will send
+    send something on 'connection' using the 'online' event and reach here and script executes and error again and the infinite loop repeats! 
+    Hence use socket.disconnect above.
+    */
     
-      const user = document.createElement("button").setAttribute('id','user'+socket.id);
-      user.classList.add("list-group-item");
-      user.appendChild(badge);
-      document.getElementById('user-list').appendChild(user);
+      console.log(allSockets)
+     
       
-    }
-    else {
-      document.getElementById('online'+socket.id).innerHTML='online'
-    }
-  })
-  */
-  
-  
-  
+      allSockets.forEach((socket)=>{
+        const user=document.getElementById("user"+socket._id)
+        
+        if (!user && socket._id!==_id) { 
+          $('#user-list').append(
+            $('<button>').addClass("list-group-item").attr('id','user'+socket._id).html(socket.nickname).append(
+              $('<span>').addClass("badge badge-primary badge-pill").attr('id','badge'+socket._id).html('online')
+            )
+          )
+        }
     
-})
+        else {
+          $('#badge'+socket._id).removeClass('badge-primary').addClass('badge-success').html('online');
+        }
+      })
+      
+      
+    })
+
+
 
 
 

@@ -2,14 +2,35 @@ doctype html
 html
     include shared/head.pug
     body
-        h1 Chat
-        div
-            div.list-group#user-list
-            each value in chat
-                button(id='user'+value._id).list-group-item value.nickname
-                    span(id='online-offline'+value._id).badge.badge-primary.badge-pill offline
-        
+        h1 Proto Chat #{nickname}
+        .container
+            .row 
+                .list-group.col-sm-6#user-list
+                    each value in private
+                        button(id='user'+value._id  data-toggle='modal' data-target='#chat'+value._id).list-group-item= value.nickname
+                            span(id='badge'+value._id).badge.badge-primary.badge-pill offline
+                .col-sm-6#user-chat
+                    p click!
 
+        each value in private
+            div(id='chat'+value._id tabindex='-1').modal.fade
+                .modal-dialog 
+                    .modal-content 
+                        .modal-header
+                            h3 #{value.nickname}
+                            button(type='button' data-dismiss='modal').close
+                            span &times;
+                        .modal-body.vh-60
+                            - var chat=value.chat
+                            each value in chat 
+                                .card.w-75.card-custom
+                                    .card-body.d-flex.card-body-custom
+                                        p.mr-auto.mb-0 #{value.text}
+                                        p.mb-0 #{value.date}
+                        .modal-footer
+                            
+
+      
 
 
 
@@ -18,4 +39,6 @@ html
         a(href='/logout') Logout 
         p #{message}
         script(src='/socket.io/socket.io.js')
+        script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js')
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js")
         script(src='/public/script.js')
