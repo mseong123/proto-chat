@@ -36,7 +36,7 @@ function socketServer(io) {
                 if (chat) {
                     
                     await UserModel.findByIdAndUpdate(socket.request.user._id,
-                        {$push:{'private.$[private].chat':{text:msg}}},
+                        {$push:{'private.$[private].chat':{text:msg,self:true}}},
                         {"arrayFilters":[{'private._id':corresponding_id}]}
                         )
                     }

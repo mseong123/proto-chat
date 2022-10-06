@@ -4,8 +4,14 @@ const chatSchema=new mongoose.Schema({
     _id:String,
     nickname:String,
     chat:[{text:String,
-        time:{type:Date,
-            default:Date.now}
+        self:{
+            type:Boolean,
+            default:false
+        },
+        time:{
+            type:Date,
+            default:Date.now
+        }
         }],
     }
 )
