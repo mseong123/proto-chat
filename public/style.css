@@ -1,17 +1,28 @@
-.card-custom {
+.card-custom-1,
+.card-custom-2 {
   margin-top:0.5rem;
   margin-bottom:0.5rem;
+}
+
+.card-custom-1 {
+  background-color:#3AAFA9
+  
 }
 
 .card-body-custom {
   padding:0.5rem
 }
-.vh-60{
+.modal-body-custom{
   height:60vh;
+  overflow:auto;
 }
 
-
-.chat-custom {
-  border:1px solid rgba(0,0,0,.125);
-  border-radius:0.25rem;
+.modal-header-custom {
+  background-color:#3AAFA9
+}
+.modal-content-custom {
+  color:white;
+}
+.close-custom {
+  line-height:normal;
 }

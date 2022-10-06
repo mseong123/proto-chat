@@ -15,19 +15,37 @@ html
         each value in private
             div(id='chat'+value._id tabindex='-1').modal.fade
                 .modal-dialog 
-                    .modal-content 
-                        .modal-header
-                            h3 #{value.nickname}
-                            button(type='button' data-dismiss='modal').close
-                            span &times;
-                        .modal-body.vh-60
+                    .modal-content.modal-content-custom
+                        .modal-header.modal-header-custom
+                            h3#header-nickname 
+                                span(style='vertical-align:middle').fa.fa-lg.fa-user-circle
+                                |
+                                |
+                                |
+                                .
+                                    #{value.nickname}
+                            button(type='button' data-dismiss='modal').close.close-custom
+                                span.fa.fa-close.fa-close-custom
+                        .modal-body.modal-body-custom
                             - var chat=value.chat
                             each value in chat 
-                                .card.w-75.card-custom
+                                .card.w-75.card-custom-1
                                     .card-body.d-flex.card-body-custom
                                         p.mr-auto.mb-0 #{value.text}
-                                        p.mb-0 #{value.date}
-                        .modal-footer
+                                        - var date= new Date(value.time)
+                                        p.mb-0.small #{date.getHours()+':'+date.getMinutes()}
+                        .modal-footer.d-block
+                            form
+                                .form-row
+                                    .col-1 
+                                        button.btn.btn-light
+                                            span.fa.fa-plus
+                                    .col-9
+                                        input(type='text' id='input'+value._id).form-control
+                                    .col
+                                        button(type='submit' onclick='formOnClick(event)' id='submit'+value._id).btn.btn-dark
+                                            span.fa.fa-arrow-right
+
                             
 
       

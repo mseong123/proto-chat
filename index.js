@@ -44,10 +44,12 @@ app.use(passport.session());
 /*Created my own middleware which attach req.user to socket instance (socket.request.user) and mimick whats in 
 https://github.com/jfromaniello/passport.socketio/issues/148 which wraps around session and passport. Reason why i don't
 use that is don't quite understand detailed mechanics of it other than being able to do what my middleware do below. Also
-not sure how session would work under websocket (need to explore further next time)*/
+not sure how session would work under websocket (need to explore further next time). Also attach next from app middleware for 
+error handling and attach it under socket instance. */
 app.use((req,res,next)=>{
   io.use((socket,socketNext)=>{
     socket.request.user=req.user;
+    socket.next=next;
     socketNext()
   })
   next();

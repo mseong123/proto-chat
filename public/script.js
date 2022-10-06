@@ -1,13 +1,6 @@
-/*****EVENT LISTENERS****/
-
-
-
-
-
-
 /*****SOCKET-IO******/
 let socket = io();
-let _id; //keep global _id state for usage
+let localUserInfo; //keep global info object (_id and nickname)
 
 //set up the only error listener for server errors
 socket.on("connect_error", (err) => {
@@ -18,13 +11,9 @@ socket.on('connect',()=>{
   console.log('connect')
 })
 
-socket.on('_id',(userID)=>{
-  _id=userID//assignment of _id happens when connected by server
+socket.on('userInfo',(userInfo)=>{
+  localUserInfo=userInfo
 })
-
-
-
-
 
 socket.on('disconnect',()=>{
   /*socket.disconnect() is extremely important. For WHATEVER REASON (ie client script error - see below* for writeup or other server errors) 
@@ -41,6 +30,7 @@ socket.on('disconnect',()=>{
   console.log('disconnect')}
   )
 
+  
   socket.on('online',(allSockets)=>{
     /*ie *if i have a script error here,socket.io can't proceed and execute and will attempt new connection to server then server will send
     send something on 'connection' using the 'online' event and reach here and script executes and error again and the infinite loop repeats! 
@@ -53,7 +43,7 @@ socket.on('disconnect',()=>{
       allSockets.forEach((socket)=>{
         const user=document.getElementById("user"+socket._id)
         
-        if (!user && socket._id!==_id) { 
+        if (!user && socket._id!==localUserInfo._id) { 
           $('#user-list').append(
             $('<button>').addClass("list-group-item").attr('id','user'+socket._id).html(socket.nickname).append(
               $('<span>').addClass("badge badge-primary badge-pill").attr('id','badge'+socket._id).html('online')
@@ -69,6 +59,18 @@ socket.on('disconnect',()=>{
       
     })
 
+
+/*****EVENT LISTENERS****/
+function formOnClick(e) {
+  e.preventDefault();
+  
+  const corresponding_id=e.currentTarget.id.match(/(?<=submit).*/)[0];
+  const corresponding_nickname=$('#header-nickname').html();
+  const msg = $('#input'+corresponding_id).val()
+  
+  socket.emit('private message',corresponding_id,corresponding_nickname,msg);
+
+}
 
 
 
