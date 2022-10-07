@@ -1,7 +1,7 @@
 /*****SOCKET-IO******/
 let socket = io();
 let localUserInfo; //keep global info object (_id and nickname)
-console.log(socket)
+
 
 //set up the only error listener for server errors
 socket.on("connect_error", (err) => {
@@ -38,7 +38,7 @@ socket.on('disconnect',()=>{
     Hence use socket.disconnect above.
     */
     
-      console.log(allSockets)
+      
      
       
       allSockets.forEach((innerSocket)=>{
@@ -46,13 +46,24 @@ socket.on('disconnect',()=>{
 
         if (!user && innerSocket._id!==localUserInfo._id) { 
           //render pug template (using precompiled pug file from server side
-          const html=listGroupItemTemplate({
+          const listGroupItemHTML=listGroupItemTemplate({
             private:[innerSocket],
             status:{
               msg:'online',
               class:'success'}
           })
-          $('#user-list').append(html)
+          $('#user-list').append(listGroupItemHTML)
+
+          const modalHTML=modalTemplate({
+            private:[{
+              _id:innerSocket._id,
+              socketID:innerSocket.socketID,
+              nickname:innerSocket.nickname,
+              chat:[]
+            }]
+          })
+          $('body').append(modalHTML)
+
         }
     
         else {
@@ -67,22 +78,22 @@ socket.on('disconnect',()=>{
     //one handler for both own and corresponding msg
     socket.on('private message',(_id,self,msg)=>{
       let html;
-      console.log(msg)
+      
       if (self) {
         html=cardSelfTemplate({
           value:{
             text:msg,
             time:new Date()}
         })
-        console.log(html)
+        
     } else {
       html=cardNotSelfTemplate({
         value:{
           text:msg,
           time:new Date()}
       })
-      console.log(html)
     }
+
     $('#chat'+_id).find('.modal-body').append(html)
   })
 
@@ -90,10 +101,11 @@ socket.on('disconnect',()=>{
 /*****EVENT LISTENERS****/
 function formOnClick(e) {
   e.preventDefault();
-  
-  const corresponding_socket_id=$(e.currentTarget).attr('data-socket');
-  const corresponding_id=e.currentTarget.id.match(/(?<=submit).*/)[0];
-  const corresponding_nickname=$('#header-nickname').html();
+  //do the below because formOnSubmit triggers a different e.target when using jquery to active .click();
+  let target=e.currentTarget || e.target
+  const corresponding_socket_id=$(target).attr('data-socket');
+  const corresponding_id=target.id.match(/(?<=submit).*/)[0];
+  const corresponding_nickname=$('#header-nickname').text();
   
   const msg = $('#input'+corresponding_id).val()
   
@@ -101,6 +113,29 @@ function formOnClick(e) {
 
 }
 
+function formOnSubmit(e) {
+  e.preventDefault()
+
+  const corresponding_id=e.currentTarget.id.match(/(?<=form).*/)[0];
+  
+    $("#submit"+corresponding_id).click();
+    $("#input"+corresponding_id).val('')
+}
+
+//set all modals to auto focus on text input when open
+$('.modal').each(function(i,element){
+  
+  const _id=$(element).attr('id').match(/(?<=chat).*/)[0]
+  
+
+  $(element).on('shown.bs.modal', function () {
+    let modalBody=$(element).find('.modal-body')
+    modalBody.animate({ scrollTop: modalBody.height()}, 500);
+    $("#input"+_id).focus();
+    
+  })
+  
+})
 
 
 

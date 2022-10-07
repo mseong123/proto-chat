@@ -9,22 +9,30 @@ function socketServer(io) {
             nickname:socket.request.user.nickname,
         })
 
+        function fetchSockets() {
+            io.fetchSockets().then((allSockets)=>{
+                const allSocketIDandNickname=allSockets.map(innerSocket=>{
+                    if (innerSocket.request) 
+                    return  {
+                        _id:innerSocket.request.user._id,
+                        /*need socketID only for purpose of emitting LIVE private messaging, otherwise only DB operations take place when
+                        offline chat happens using _id and nickname.*/
+                        socketID:innerSocket.id,
+                        nickname:innerSocket.request.user.nickname,
+                    }
+                })
+                io.emit('online',allSocketIDandNickname)
+            })
+        }
 
         /*to broadcast to all connected sockets all socket currently online(and let client side filter data) EVERYTIME
         when a socket connect.*/
-        io.fetchSockets().then((allSockets)=>{
-            const allSocketIDandNickname=allSockets.map(innerSocket=>{
-                if (innerSocket.request) 
-                return  {
-                    _id:innerSocket.request.user._id,
-                    /*need socketID only for purpose of emitting LIVE private messaging, otherwise only DB operations take place when
-                    offline chat happens using _id and nickname.*/
-                    socketID:innerSocket.id,
-                    nickname:innerSocket.request.user.nickname,
-                }
-            })
-            io.emit('online',allSocketIDandNickname)
-        })
+        fetchSockets();
+
+        //when a socket disconnect, do the same thing
+        socket.on('disconnect',fetchSockets)
+
+        
         
         
         //private message
@@ -43,9 +51,9 @@ function socketServer(io) {
                         {"arrayFilters":[{'private._id':corresponding_id}]}
                         )
                     }
-                //if not, create a new object with corresponding _id and nickname and populate with chat data
 
-                //HAVENT TEST THIS YET, NEED ULTRAMAN
+
+                //if not, create a new object with corresponding _id and nickname and populate with chat data
                  else {
                     await UserModel.findByIdAndUpdate(socket.request.user._id,
                         {$push:{'private':{

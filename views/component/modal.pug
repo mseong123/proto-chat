@@ -23,7 +23,7 @@ each value in private
                             
                                             
                 .modal-footer.d-block
-                    form
+                    form(onsubmit="formOnSubmit(event)" id='form'+value._id)
                         .form-row
                             .col-1 
                                 button.btn.btn-light
@@ -31,5 +31,5 @@ each value in private
                             .col-9
                                 input(type='text' id='input'+value._id).form-control
                             .col
-                                button(type='button' onclick='formOnClick(event)' id='submit'+value._id data-socket=value.socketID).btn.btn-dark
+                                button(type='submit' onclick='formOnClick(event)' id='submit'+value._id data-socket=value.socketID).btn.btn-dark
                                     span.fa.fa-arrow-right
