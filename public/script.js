@@ -38,9 +38,6 @@ socket.on('disconnect',()=>{
     Hence use socket.disconnect above.
     */
     
-      
-     
-      
       allSockets.forEach((innerSocket)=>{
         const user=document.getElementById("user"+innerSocket._id)
 
@@ -73,6 +70,21 @@ socket.on('disconnect',()=>{
       })
       
       
+    })
+
+    socket.on('offline',(_id)=>{
+      const user = document.getElementById("user"+_id)
+      const firstChatMessage=$('#chat'+_id).find('.card:first')
+      if (user && firstChatMessage[0]) {
+        $("#badge"+_id).removeClass('badge-success').addClass('badge-primary').html('offline');
+      }
+      else {
+        $("#user"+_id).remove();
+        $("chat"+_id).on('hidden.bs.modal',function(){
+          $("#chat"+_id).remove();
+        })
+        
+      }
     })
 
     //one handler for both own and corresponding msg
