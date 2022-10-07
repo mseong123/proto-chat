@@ -1,0 +1,35 @@
+each value in private
+    div(id='chat'+value._id tabindex='-1').modal.fade
+        .modal-dialog 
+            .modal-content.modal-content-custom
+                .modal-header.modal-header-custom
+                    h3#header-nickname 
+                        span(style='vertical-align:middle').fa.fa-lg.fa-user-circle
+                        |
+                        |
+                        |
+                        .
+                            #{value.nickname}
+                    button(type='button' data-dismiss='modal').close.close-custom
+                        span.fa.fa-close.fa-close-custom
+                .modal-body.modal-body-custom
+                    - var chat=value.chat
+                    each value in chat
+                        if value.self
+                            include card-self.pug 
+                              
+                        else
+                            include card-not-self.pug
+                            
+                                            
+                .modal-footer.d-block
+                    form
+                        .form-row
+                            .col-1 
+                                button.btn.btn-light
+                                    span.fa.fa-plus
+                            .col-9
+                                input(type='text' id='input'+value._id).form-control
+                            .col
+                                button(type='button' onclick='formOnClick(event)' id='submit'+value._id data-socket=value.socketID).btn.btn-dark
+                                    span.fa.fa-arrow-right

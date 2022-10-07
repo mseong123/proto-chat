@@ -1,6 +1,7 @@
 /*****SOCKET-IO******/
 let socket = io();
 let localUserInfo; //keep global info object (_id and nickname)
+console.log(socket)
 
 //set up the only error listener for server errors
 socket.on("connect_error", (err) => {
@@ -40,35 +41,63 @@ socket.on('disconnect',()=>{
       console.log(allSockets)
      
       
-      allSockets.forEach((socket)=>{
-        const user=document.getElementById("user"+socket._id)
-        
-        if (!user && socket._id!==localUserInfo._id) { 
-          $('#user-list').append(
-            $('<button>').addClass("list-group-item").attr('id','user'+socket._id).html(socket.nickname).append(
-              $('<span>').addClass("badge badge-primary badge-pill").attr('id','badge'+socket._id).html('online')
-            )
-          )
+      allSockets.forEach((innerSocket)=>{
+        const user=document.getElementById("user"+innerSocket._id)
+
+        if (!user && innerSocket._id!==localUserInfo._id) { 
+          //render pug template (using precompiled pug file from server side
+          const html=listGroupItemTemplate({
+            private:[innerSocket],
+            status:{
+              msg:'online',
+              class:'success'}
+          })
+          $('#user-list').append(html)
         }
     
         else {
-          $('#badge'+socket._id).removeClass('badge-primary').addClass('badge-success').html('online');
+          $('#submit'+innerSocket._id).attr('data-socket',innerSocket.socketID)
+          $('#badge'+innerSocket._id).removeClass('badge-primary').addClass('badge-success').html('online');
         }
       })
       
       
     })
 
+    //one handler for both own and corresponding msg
+    socket.on('private message',(_id,self,msg)=>{
+      let html;
+      console.log(msg)
+      if (self) {
+        html=cardSelfTemplate({
+          value:{
+            text:msg,
+            time:new Date()}
+        })
+        console.log(html)
+    } else {
+      html=cardNotSelfTemplate({
+        value:{
+          text:msg,
+          time:new Date()}
+      })
+      console.log(html)
+    }
+    $('#chat'+_id).find('.modal-body').append(html)
+  })
+
 
 /*****EVENT LISTENERS****/
 function formOnClick(e) {
   e.preventDefault();
   
+  const corresponding_socket_id=$(e.currentTarget).attr('data-socket');
   const corresponding_id=e.currentTarget.id.match(/(?<=submit).*/)[0];
   const corresponding_nickname=$('#header-nickname').html();
+  
   const msg = $('#input'+corresponding_id).val()
   
-  socket.emit('private message',corresponding_id,corresponding_nickname,msg);
+  socket.emit('private message',corresponding_socket_id,corresponding_id,corresponding_nickname,msg);
 
 }
 

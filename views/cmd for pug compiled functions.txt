@@ -1,0 +1,1 @@
+pug -c --name-after-file -w .\views\component -o .\public\

@@ -11,14 +11,16 @@ function socketServer(io) {
 
 
         /*to broadcast to all connected sockets all socket currently online(and let client side filter data) EVERYTIME
-        when a socket connect. Use user._id info rather than socket.id because chat is user based and stored/persistent in db*/
+        when a socket connect.*/
         io.fetchSockets().then((allSockets)=>{
             const allSocketIDandNickname=allSockets.map(innerSocket=>{
                 if (innerSocket.request) 
                 return  {
                     _id:innerSocket.request.user._id,
+                    /*need socketID only for purpose of emitting LIVE private messaging, otherwise only DB operations take place when
+                    offline chat happens using _id and nickname.*/
+                    socketID:innerSocket.id,
                     nickname:innerSocket.request.user.nickname,
-                    //socketID:innerSocket.id
                 }
             })
             io.emit('online',allSocketIDandNickname)
@@ -26,40 +28,72 @@ function socketServer(io) {
         
         
         //private message
-        socket.on("private message", async function(corresponding_id, corresponding_nickname, msg) {
+        socket.on("private message", async function(corresponding_socket_id,corresponding_id, corresponding_nickname, msg) {
+
             try{
-                //update own socket emitter db
-                //First find if chat with corresponding user exists
-                const chat=await UserModel.findOne().elemMatch('private',{_id:corresponding_id}).exec();
-                //if exist, just update array of msg and timestamp
+                //update own socket emitter user details in db
+                //First find if chat with corresponding user already exists
+                const ownChat=await UserModel.findOne({_id:socket.request.user._id}).elemMatch('private',{_id:corresponding_id}).exec();
+                //if exist, just update array of msg,self field and timestamp
                 
-                if (chat) {
+                if (ownChat) {
                     
                     await UserModel.findByIdAndUpdate(socket.request.user._id,
                         {$push:{'private.$[private].chat':{text:msg,self:true}}},
                         {"arrayFilters":[{'private._id':corresponding_id}]}
                         )
                     }
-                //if not, create a corresponding_id object and populate with relevant data and msg
+                //if not, create a new object with corresponding _id and nickname and populate with chat data
 
                 //HAVENT TEST THIS YET, NEED ULTRAMAN
                  else {
                     await UserModel.findByIdAndUpdate(socket.request.user._id,
-                        {$push:{'private':{chat:{
-                            text:msg},
-                            nickname:corresponding_nickname
+                        {$push:{'private':{
+                            _id:corresponding_id,
+                            nickname:corresponding_nickname,
+                            chat:{
+                                text:msg,
+                                self:true
+                                }
                             }}
                         })
                     }
+                //After that update corresponding user's detail in db and do the same thing
+                const correspondingChat=await UserModel.findOne({_id:corresponding_id}).elemMatch('private',{_id:socket.request.user._id}).exec();
+                if (correspondingChat) {
+                    
+                    await UserModel.findByIdAndUpdate(corresponding_id,
+                        {$push:{'private.$[private].chat':{text:msg,self:false}}},
+                        {"arrayFilters":[{'private._id':socket.request.user._id}]}
+                        )
+                    }
+                else {
+                    await UserModel.findByIdAndUpdate(corresponding_id,
+                        {$push:{'private':{
+                            _id:socket.request.user._id,
+                            nickname:socket.request.user.nickname,
+                            chat:{
+                                text:msg,
+                                self:false
+                                }
+                            }}
+                        })
+                    }
+               
+                //if db entry succeed only then emit message to socket emitter
+                console.log(socket.id)
+                socket.emit('private message',corresponding_id,true,msg)
+                //and also recipient
+                console.log(corresponding_socket_id)
+                socket.to(corresponding_socket_id).emit('private message',socket.request.user._id,false,msg)
+                
             } catch (err) {
                 console.log('database error '+err)
                 socket.next(err)
             }
             
-            /*
-            socket.join(another_id)
-            socket.to(another_id).emit("private message", another._id, msg);
-            */
+
+
           });
         
 
