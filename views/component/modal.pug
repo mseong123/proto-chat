@@ -29,7 +29,7 @@ each value in private
                                 button.btn.btn-light
                                     span.fa.fa-plus
                             .col-9
-                                input(type='text' id='input'+value._id).form-control
+                                input(type='text' id='input'+value._id required).form-control
                             .col
                                 button(type='submit' onclick='formOnClick(event)' id='submit'+value._id data-socket=value.socketID).btn.btn-dark
                                     span.fa.fa-arrow-right
