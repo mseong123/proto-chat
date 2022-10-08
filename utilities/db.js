@@ -21,7 +21,12 @@ const userSchema=new mongoose.Schema({
     nickname:{
         type:String,
         default:function() {
-            return this.username;
+            if (this.username)
+                return this.username
+            else if (this.google)
+                return this.displayName;
+            else if (this.facebook)
+                return this.displayName;
         }
     },
     password:String,
