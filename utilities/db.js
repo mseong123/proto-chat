@@ -25,7 +25,7 @@ const userSchema=new mongoose.Schema({
                 return this.username
             else if (this.google)
                 return this.google.displayName;
-            else if (this.facebook)
+            else (this.facebook)
                 return this.facebook.displayName;
         }
     },
