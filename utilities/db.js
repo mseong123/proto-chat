@@ -24,9 +24,9 @@ const userSchema=new mongoose.Schema({
             if (this.username)
                 return this.username
             else if (this.google)
-                return this.displayName;
+                return this.google.displayName;
             else if (this.facebook)
-                return this.displayName;
+                return this.facebook.displayName;
         }
     },
     password:String,

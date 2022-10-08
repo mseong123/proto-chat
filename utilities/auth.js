@@ -26,7 +26,7 @@ async function signUp(req,res,next) {
                 password:bcrypt.hashSync(req.body.password,12)
             })
             await newUser.save();
-            req.session.message={signup:'Signup successful. Please Login'}//message handler
+            req.session.message={login:'Signup successful. Please Login'}//message handler
             res.redirect('/login')
         }
     } catch(err) {
