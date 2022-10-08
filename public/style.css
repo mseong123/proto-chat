@@ -6,14 +6,17 @@
 
 .card-custom-1 {
   background-color:#F9BA32;
+  max-width:75%;
   
 }
 .card-custom-2 {
   background-color:#3AAFA9;
+  max-width:75%;
 }
 
 .card-body-custom {
-  padding:0.6rem
+  padding:0.6rem;
+  
 }
 .modal-body-custom{
   height:60vh;
@@ -28,6 +31,9 @@
 }
 .close-custom {
   line-height:normal;
+}
+.small-custom {
+  font-size:60%;
 }
 
 

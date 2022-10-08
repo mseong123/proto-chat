@@ -68,7 +68,8 @@ socket.on('disconnect',()=>{
           $('#badge'+innerSocket._id).removeClass('badge-primary').addClass('badge-success').html('online');
         }
       })
-      
+    
+    modalFocus();
       
     })
 
@@ -135,19 +136,19 @@ function formOnSubmit(e) {
 }
 
 //set all modals to auto focus on text input when open
-$('.modal').each(function(i,element){
-  
-  const _id=$(element).attr('id').match(/(?<=chat).*/)[0]
-  
-
-  $(element).on('shown.bs.modal', function () {
-    let modalBody=$(element).find('.modal-body')
-    modalBody.animate({ scrollTop: modalBody.height()}, 500);
-    $("#input"+_id).focus();
-    
+function modalFocus() {
+  $('.modal').each(function(i,element){
+    const _id=$(element).attr('id').match(/(?<=chat).*/)[0]
+    $(element).on('shown.bs.modal', function () {
+      let modalBody=$(element).find('.modal-body')
+      modalBody.animate({ scrollTop: modalBody.height()}, 500);
+      $("#input"+_id).focus();
+    })
   })
-  
-})
+}
+
+modalFocus();
+
 
 
 

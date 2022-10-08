@@ -13,9 +13,10 @@ function routes(app) {
         previous message don't appear.
     */
 
-    app.get('/login',(req,res)=>{
+    app.get('/login',(req,res,next)=>{
         let message=req.session.message && req.session.message.login? req.session.message.login:null;
         res.render('login',{message},function(err,html){
+            if (err) next(err)
             if (req.session.message && req.session.message.login)
                 req.session.message.login=null; //clear message handler to prevent unexpected behaviours
             res.send(html);

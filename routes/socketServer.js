@@ -27,6 +27,7 @@ function socketServer(io) {
 
         //when a socket disconnect, do the same thing
         socket.on('disconnect',()=>{
+            if (innerSocket.request) 
             io.emit('offline',socket.request.user._id)
         })
 
@@ -87,10 +88,8 @@ function socketServer(io) {
                     }
                
                 //if db entry succeed only then emit message to socket emitter
-                console.log(socket.id)
                 socket.emit('private message',corresponding_id,true,msg)
                 //and also recipient
-                console.log(corresponding_socket_id)
                 socket.to(corresponding_socket_id).emit('private message',socket.request.user._id,false,msg)
                 
             } catch (err) {
