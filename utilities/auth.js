@@ -80,7 +80,7 @@ function auth(app) {
       },
       async function (accessToken, refreshToken, profile, done) {
         try {
-            console.log(profile)
+            
             const user=await UserModel.findOne({
                 'google.id':profile.id
             })
@@ -112,7 +112,7 @@ function auth(app) {
       },
       async function (accessToken, refreshToken, profile, done) {
         try {
-            console.log(profile)
+            
             const user=await UserModel.findOne({ 
                 'facebook.id':profile.id
             })

@@ -1,6 +1,6 @@
 const mongoose=require('mongoose')
 const moment = require('moment-timezone');
-const dateMalaysia = moment.tz(Date.now(), "Asia/Malaysia");
+const dateBangkok = moment.tz(Date.now(), "Asia/Bangkok");
 
 const chatSchema=new mongoose.Schema({
     _id:String,
@@ -12,7 +12,7 @@ const chatSchema=new mongoose.Schema({
         },
         time:{
             type:Date,
-            default:dateMalaysia
+            default:dateBangkok
         }
         }],
     }
@@ -27,8 +27,13 @@ const userSchema=new mongoose.Schema({
                 return this.username
             else if (this.google)
                 return this.google.displayName;
-            else (this.facebook)
+            else if (this.facebook) {
+
+                console.log('here')
                 return this.facebook.displayName;
+            }
+
+                
         }
     },
     password:String,

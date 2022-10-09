@@ -86,7 +86,8 @@ function socketServer(io) {
                             }}
                         })
                     }
-               
+                
+                    
                 //if db entry succeed only then emit message to socket emitter
                 socket.emit('private message',corresponding_id,true,msg)
                 //and also recipient
