@@ -20,26 +20,7 @@ const chatSchema=new mongoose.Schema({
 
 const userSchema=new mongoose.Schema({
     username:String,
-    nickname:{
-        type:String,
-        default:function() {
-            if (this.username) {
-                return this.username
-            }
-            else if (this.facebook) {
-                console.log('facebook here')
-                return this.facebook.displayName;
-            }
-            else if (this.google) {
-                console.log('google here')
-                return this.google.displayName;
-            }
-                
-            
-
-                
-        }
-    },
+    nickname:String,
     password:String,
     google:{
         id:String,

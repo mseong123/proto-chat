@@ -23,6 +23,7 @@ async function signUp(req,res,next) {
         } else {
             let newUser = new UserModel({
                 username:req.body.username,
+                nickname:req.body.username,
                 password:bcrypt.hashSync(req.body.password,12)
             })
             await newUser.save();
@@ -88,7 +89,9 @@ function auth(app) {
             if (!user) {
                 // The account at Google has not logged in to this app before.  Create a
                 // new user record and associate it with the Google account.
-                let user=UserModel({google:{
+                let user=UserModel({
+                    nickname:profile.displayName,
+                    google:{
                     id:profile.id,
                     displayName:profile.displayName,
                 }})
@@ -120,7 +123,9 @@ function auth(app) {
             if (!user) {
                 // The account at Facebook has not logged in to this app before.  Create a
                 // new user record and associate it with the Facebook account.
-                let user=UserModel({facebook:{
+                let user=UserModel({
+                    nickname:profile.displayName,
+                    facebook:{
                     id:profile.id,
                     displayName:profile.displayName,
                 }})
