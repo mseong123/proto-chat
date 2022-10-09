@@ -118,7 +118,7 @@ function formOnClick(e) {
   let target=e.currentTarget || e.target
   const corresponding_socket_id=$(target).attr('data-socket');
   const corresponding_id=target.id.match(/(?<=submit).*/)[0];
-  const corresponding_nickname=$('#header-nickname').text();
+  const corresponding_nickname=$('#chat'+corresponding_id).find('#header-nickname').text().trim();
   
   const msg = $('#input'+corresponding_id).val()
   
