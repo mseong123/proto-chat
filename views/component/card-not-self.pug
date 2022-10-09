@@ -6,7 +6,7 @@
                 | &nbsp;
                 | &nbsp;
                 | &nbsp;
-                - var date= new Date(value.time)
+                - var date= new Date(new Date(value.time).toLocaleString('en-US', { timeZone: 'Asia/Singapore'}))
             p.mb-0.text-nowrap
                 span.small  #{date.getHours()+':'+String(date.getMinutes()).padStart(2, '0')}
                 | &nbsp;
