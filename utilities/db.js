@@ -1,4 +1,6 @@
 const mongoose=require('mongoose')
+const moment = require('moment-timezone');
+const dateMalaysia = moment.tz(Date.now(), "Asia/Malaysia");
 
 const chatSchema=new mongoose.Schema({
     _id:String,
@@ -10,7 +12,7 @@ const chatSchema=new mongoose.Schema({
         },
         time:{
             type:Date,
-            default:Date.now
+            default:dateMalaysia
         }
         }],
     }
