@@ -23,15 +23,19 @@ const userSchema=new mongoose.Schema({
     nickname:{
         type:String,
         default:function() {
-            if (this.username)
+            if (this.username) {
                 return this.username
-            else if (this.google)
-                return this.google.displayName;
+            }
             else if (this.facebook) {
-
-                console.log('here')
+                console.log('facebook here')
                 return this.facebook.displayName;
             }
+            else if (this.google) {
+                console.log('google here')
+                return this.google.displayName;
+            }
+                
+            
 
                 
         }
