@@ -27,7 +27,7 @@ function socketServer(io) {
 
         //when a socket disconnect, do the same thing
         socket.on('disconnect',()=>{
-            if (innerSocket.request) 
+            if (socket.request) 
             io.emit('offline',socket.request.user._id)
         })
 
