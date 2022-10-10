@@ -46,7 +46,7 @@ function routes(app) {
     
     app.get('/signup',(req,res,next)=>{
         let message=req.session.message && req.session.message.signup? req.session.message.signup:null;
-        res.render('signup',{message},function(err,html){
+        res.render('signup',{status:message?'alert-info':null,message},function(err,html){
             if (err) next(err)
             if (req.session.message && req.session.message.signup)
                 req.session.message.signup=null; //clear message handler to prevent unexpected behaviours

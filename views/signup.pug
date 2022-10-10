@@ -2,12 +2,29 @@ doctype html
 html 
     include shared/head.pug
     body
-        h1 Sign Up
-        form(action="/signup" method="POST")
-            label(for="username") Username
-            input(type="text" name="username") 
-            label(for='password') Password
-            input(type="password" name="password") 
-            button(type="submit") Submit
+        .container
+            .row
+                .col-md-6
+                    .login-logo.d-md-flex
+                        img(src='/public/chat-icon.png')
+                        h1  Proto Chat
+                        .talk-bubble-2
+                .col-md-6
+                    .login-header
+                        .talk-bubble
+                        img(src='/public/chat-icon.png')
+                        h3  Proto Chat
+                    div
+                        h5 Sign Up
+                        form(action="/signup" method="POST")
+                            .form-group
+                                label(for="username").fa.fa-user-circle
+                                input(type="text" name="username" placeholder="Username" required).form-control 
+                            .form-group
+                                label(for='password').fa.fa-key
+                                input(type="password" name="password" placeholder="Password" required).form-control
+                            button(type="submit").btn.btn-block.btn-custom Submit
+                        hr
+                        div(class="alert "+status).mb-0.pt-2.pb-2 #{message}
         
         p #{message}

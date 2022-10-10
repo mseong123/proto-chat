@@ -49,7 +49,7 @@
   
 }
 .login-logo img {
-  width:200px;
+  width:150px;
   position:relative;
   z-index:3;
 }
@@ -61,10 +61,10 @@
 .talk-bubble-2 {
   position:absolute;
   background-color:white;
-  width:320px;
-  height:300px;
+  width:300px;
+  height:220px;
   z-index:2;
-  top:150px;
+  top:180px;
   border-bottom-right-radius:40px;
   border-top-right-radius:40px;
   box-shadow:5px 5px #ccc;
@@ -78,8 +78,8 @@
 	left: 0px;
   right: auto;
   top: auto;
-	bottom: -280px;
-	border: 40px solid;
+	bottom: -180px;
+	border: 35px solid;
 	border-color: transparent transparent transparent white;
   position:relative;
   z-index:2;
