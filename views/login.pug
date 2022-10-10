@@ -2,18 +2,21 @@ doctype html
 html
     include shared/head.pug
     body
-        h1 Login
-        form(action="/login" method="POST")
-            label(for="username") Username
-            input(type="text" name="username") 
-            label(for='password') Password
-            input(type="password" name="password") 
-            button(type="submit") Submit
-        
-        div
-            a(href='/auth/google') Login with Google
-        div
-            a(href='/auth/facebook') Login with Facebook
-        div     
-            a(href='/signup') Signup
-        p #{message}
+        .container
+            .row
+                .col-md-6
+                    h1 Login
+                    form(action="/login" method="POST")
+                        label(for="username") Username
+                        input(type="text" name="username") 
+                        label(for='password') Password
+                        input(type="password" name="password") 
+                        button(type="submit") Submit
+                    
+                    div
+                        a(href='/auth/google') Login with Google
+                    div
+                        a(href='/auth/facebook') Login with Facebook
+                    div     
+                        a(href='/signup') Signup
+                    p #{message}
