@@ -4,13 +4,17 @@ html
     body
         .container
             .row
-                .col-md-6 
+                .col-md-6
                     .login-logo.d-md-flex
                         img(src='/public/chat-icon.png')
+                        h1  Proto Chat
+                        .talk-bubble-2
+                    
                 .col-md-6
                     .login-header
+                        .talk-bubble
                         img(src='/public/chat-icon.png')
-                        h2  Proto Chat
+                        h3  Proto Chat
                     div
                         h5 Login
                         form(action="/login" method="POST")
@@ -37,8 +41,8 @@ html
                             span Login with Facebook
                         hr
                         div.text-center
-                            p.mb-1 Don't have an account?      
+                            p.mb-2 Don't have an account?      
                                 a(href='/signup') Signup
-                        div(class="alert "+status) #{message}
+                        div(class="alert "+status).mb-0.pt-2.pb-2 #{message}
                             
                             
