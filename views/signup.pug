@@ -25,7 +25,10 @@ html
                                 label(for='password').fa.fa-key
                                 input(type="password" name="password" placeholder="Password" required).form-control
                             button(type="submit").btn.btn-block.btn-custom Submit
+                        br
                         hr
+                        div.text-center
+                            a(href='/login') Back
+                        br
                         div(class="alert "+status).mb-0.pt-2.pb-2 #{message}
         
-        p #{message}
