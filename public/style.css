@@ -1,3 +1,7 @@
+a:hover {
+  text-decoration:none;
+}
+
 .card-custom-1,
 .card-custom-2 {
   margin-top:0.5rem;
