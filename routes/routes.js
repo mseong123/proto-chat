@@ -15,7 +15,7 @@ function routes(app) {
 
     app.get('/login',(req,res,next)=>{
         let message=req.session.message && req.session.message.login? req.session.message.login:null;
-        res.render('login',{message},function(err,html){
+        res.render('login',{status:message?'alert-info':null,message},function(err,html){
             if (err) next(err)
             if (req.session.message && req.session.message.login)
                 req.session.message.login=null; //clear message handler to prevent unexpected behaviours

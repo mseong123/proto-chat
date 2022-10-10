@@ -35,5 +35,67 @@
 .small-custom {
   font-size:60%;
 }
+/*Login page*/
+.login-logo {
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  background-color:#3AAFA9;
+  display:none;
+}
+.login-logo img {
+  width:300px
+}
+
+.login-header {
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  height:27vh;
+}
+.login-header img {
+  width:100px
+}
+
+
+
+.btn-custom {
+  color:white;
+  background-color:#3AAFA9
+}
+.btn-google-custom {
+  border-color:#ccc;
+}
+
+.divider {
+  position:relative;
+  text-align:center;
+  margin-top:10px;
+  margin-bottom:10px;
+}
+  
+.divider span {
+  display:inline-block;
+  padding:0 10px;
+  background:#fff;
+  color:grey;
+}
+.divider:before {
+  content:"";
+  display:block;
+  position:absolute;
+  z-index:-1;
+  left:0;
+  right:0;
+  top:50%;
+  height:1px;
+  background:#ccc;
+}
+.google-logo-custom {
+  width:15px;
+}
 
 

@@ -4,19 +4,41 @@ html
     body
         .container
             .row
+                .col-md-6 
+                    .login-logo.d-md-flex
+                        img(src='/public/chat-icon.png')
                 .col-md-6
-                    h1 Login
-                    form(action="/login" method="POST")
-                        label(for="username") Username
-                        input(type="text" name="username") 
-                        label(for='password') Password
-                        input(type="password" name="password") 
-                        button(type="submit") Submit
-                    
+                    .login-header
+                        img(src='/public/chat-icon.png')
+                        h2  Proto Chat
                     div
-                        a(href='/auth/google') Login with Google
-                    div
-                        a(href='/auth/facebook') Login with Facebook
-                    div     
-                        a(href='/signup') Signup
-                    p #{message}
+                        h5 Login
+                        form(action="/login" method="POST")
+                            .form-group
+                                label(for="username").sr-only
+                                input(type="text" name="username" placeholder="Username" required).form-control
+                            .form-group
+                                label(for='password').sr-only
+                                input(type="password" name="password" placeholder="Password" required).form-control
+                            button(type="submit").btn.btn-block.btn-custom Submit
+                        p.divider
+                            span or
+                           
+
+                        a(href='/auth/google').btn.btn-block.btn-light.btn-google-custom
+                            img(src='/public/google-icon.png').google-logo-custom
+                            |
+                            |
+                            span Login with Google
+                        a(href='/auth/facebook').btn.btn-block.btn-primary 
+                            span.fa.fa-facebook
+                            |
+                            |
+                            span Login with Facebook
+                        hr
+                        div.text-center
+                            p.mb-1 Don't have an account?      
+                                a(href='/signup') Signup
+                        div(class="alert "+status) #{message}
+                            
+                            
