@@ -62,19 +62,19 @@ a:hover {
   z-index:3;
 }
 
-.talk-bubble-2 {
+.talk-bubble {
   position:absolute;
   background-color:white;
   width:300px;
   height:220px;
   z-index:2;
-  top:180px;
+  top:210px;
   border-bottom-right-radius:40px;
   border-top-right-radius:40px;
   box-shadow:5px 5px #ccc;
 }
 
-.talk-bubble-2:after {
+.talk-bubble:after {
   content: ' ';
 	position: absolute;
 	width: 0;
@@ -97,37 +97,11 @@ a:hover {
   align-items:center;
   height:27vh;
   position:relative;
-  color:white;
+  color:black;
 }
 .login-header img {
-  width:80px
+  width:100px
 }
-.talk-bubble {
-  position:absolute;
-  background-color:#3AAFA9;
-  width:200px;
-  height:140px;
-  z-index:-1;
-  top:5px;
-  border-bottom-right-radius:40px;
-  border-top-right-radius:40px;
-  box-shadow:3px 3px #ccc;
-}
-
-.talk-bubble:after {
-  content: ' ';
-	position: absolute;
-	width: 0;
-	height: 0;
-	left: 0px;
-  right: auto;
-  top: auto;
-	bottom: -20px;
-	border: 22px solid;
-	border-color: transparent transparent transparent #3AAFA9;
-  
-}
-
 
 
 .btn-custom {
