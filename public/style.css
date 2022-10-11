@@ -139,11 +139,12 @@ a:hover {
 .modal-content-custom {
   color:white;
 }
-.close-custom {
-  line-height:normal;
-}
 .small-custom {
   font-size:60%;
+}
+
+.fa-arrow.left-custom {
+  color:white;
 }
 
 /*--Card--*/
