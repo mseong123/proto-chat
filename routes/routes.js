@@ -63,10 +63,7 @@ function routes(app) {
             message,
             nickname:req.user.nickname,
             private:req.user.private,
-            status:{
-                msg:'offline',
-                class:'primary'
-            }
+            
         },function(err,html){
             if (err) next(err)
             if (req.session.message && req.session.message.chat)

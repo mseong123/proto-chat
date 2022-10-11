@@ -1,3 +1,11 @@
 each value in private
-    button(id='user'+value._id data-toggle='modal' data-target='#chat'+value._id).list-group-item= value.nickname 
-        span(id='badge'+value._id class='badge-'+status.class).badge.badge-pill #{status.msg}
+    button(id='user'+value._id data-toggle='modal' data-target='#chat'+value._id).list-group-item.list-group-item-action.d-flex.pt-1.pb-1.align-items-center
+        span.fa.fa-user.fa-2x.mr-3
+        if value.chat    
+            .d-flex.flex-column.mr-auto
+                p.mb-0 #{value.nickname}
+                p.mb-0.small.text-truncate.text-truncate-custom #{value.chat[value.chat.length-1].text}
+        else
+            .d-flex.flex-column.mr-auto
+                p.mb-0 #{value.nickname}
+        span(id='badge'+value._id class='badge-'+status).badge-custom

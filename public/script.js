@@ -45,9 +45,7 @@ socket.on('disconnect',()=>{
           //render pug template (using precompiled pug file from server side
           const listGroupItemHTML=listGroupItemTemplate({
             private:[innerSocket],
-            status:{
-              msg:'online',
-              class:'success'}
+            status:'success'
           })
           $('#user-list').append(listGroupItemHTML)
 
