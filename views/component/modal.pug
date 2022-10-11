@@ -4,13 +4,8 @@ each value in private
             .modal-content.modal-content-custom
                 .modal-header.modal-header-custom
                     //-becareful in amending the following id #header-nickname, .text() needed in db operation under 'private message' 
-                    h3#header-nickname 
-                        span(style='vertical-align:middle').fa.fa-lg.fa-user-circle
-                        |
-                        |
-                        |
-                        .
-                            #{value.nickname}
+                    span(style='vertical-align:middle').fa.fa-2x.fa-user-circle.mr-3
+                    h5.mb-0#header-nickname #{value.nickname}     
                     button(type='button' data-dismiss='modal').close.close-custom
                         span.fa.fa-close.fa-close-custom
                 .modal-body.modal-body-custom
@@ -29,7 +24,7 @@ each value in private
                             .col-1 
                                 button.btn.btn-light
                                     span.fa.fa-plus
-                            .col-9
+                            .col-8
                                 input(type='text' id='input'+value._id required).form-control
                             .col
                                 button(type='submit' onclick='formOnClick(event)' id='submit'+value._id data-socket=value.socketID).btn.btn-dark
