@@ -106,6 +106,7 @@ socket.on('disconnect',()=>{
     }
 
     $('#chat'+_id).find('.modal-body').append(html)
+    $('#user'+_id).find('.text-truncate-custom').text(msg)
   })
 
 
