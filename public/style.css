@@ -105,18 +105,13 @@ a:hover {
 }
 
 /*Chat page*/
-.chat-container {
-  height:100vh;
-}
-
-
 .chat-header {
-  flex:6 1 auto;
   background-color:#3AAFA9;
   display:flex;
   flex-direction:column;
   justify-content:end;
   color:white;
+  height:15vh;
 }
 .chat-header a  {
   color:white;
@@ -126,18 +121,18 @@ a:hover {
   border-right:1px solid #ccc;
   border-bottom:1px solid #ccc;
   box-shadow:0px 2px 2px #ccc;
-  flex:0.5 1 auto;
+  height:7vh;
 }
 .chat-body {
   border-left:1px solid #ccc;
   border-right:1px solid #ccc;
   border-bottom:1px solid #ccc;
-  height:60vh;
+  height:45vh;
   overflow-y:auto;
   overflow-x:hidden;
 }
 .chat-footer {
-  flex:1 1 auto;
+  height:7vh;
   background-color:#3AAFA9;
   color:white;
 }
