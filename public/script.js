@@ -66,9 +66,8 @@ socket.on('disconnect',()=>{
           $('#badge'+innerSocket._id).removeClass('badge-primary').addClass('badge-success').html('online');
         }
       })
-    
-    modalFocus();
-      
+    /*switch off for now due to ux issue on mobile*/
+    //modalFocus();
     })
 
     socket.on('offline',(_id)=>{
@@ -146,7 +145,8 @@ function modalFocus() {
   })
 }
 
-modalFocus();
+/*switch off for now due to ux issue on mobile*/
+//modalFocus();
 
 
 

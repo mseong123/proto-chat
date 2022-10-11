@@ -126,7 +126,7 @@ a:hover {
   border-left:1px solid #ccc;
   border-right:1px solid #ccc;
   border-bottom:1px solid #ccc;
-  height:50vh;
+  height:65vh;
   overflow-y:auto;
   overflow-x:hidden;
 
@@ -160,10 +160,6 @@ a:hover {
   .fa-user-circle-o-custom {
     font-size:4em;
   }
-  .chat-body {
-    height:65vh
-  }
-
 }
 
 
