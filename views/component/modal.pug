@@ -15,10 +15,10 @@ each value in private
                             include card-self.pug   
                         else
                             include card-not-self.pug                            
-                .modal-footer.d-block
+                .modal-footer.d-block.p-2
                     form(onsubmit="formOnSubmit(event)" id='form'+value._id)
                         .form-row
-                            .col-2 
+                            .col-2.col-sm-1
                                 button.btn.btn-light
                                     span.fa.fa-plus
                             .col-8
