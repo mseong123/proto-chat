@@ -5,7 +5,7 @@ function pug_classes_object(r){var a="",n="";for(var o in r)o&&r[o]&&pug_has_own
 function pug_escape(e){var a=""+e,t=pug_match_html.exec(a);if(!t)return e;var r,c,n,s="";for(r=t.index,c=0;r<a.length;r++){switch(a.charCodeAt(r)){case 34:n="&quot;";break;case 38:n="&amp;";break;case 60:n="&lt;";break;case 62:n="&gt;";break;default:continue}c!==r&&(s+=a.substring(c,r)),c=r+1,s+=n}return c!==r?s+a.substring(c,r):s}
 var pug_has_own_property=Object.prototype.hasOwnProperty;
 var pug_match_html=/["&<>]/;
-function pug_rethrow(n,e,r,t){if(!(n instanceof Error))throw n;if(!("undefined"==typeof window&&e||t))throw n.message+=" on line "+r,n;try{t=t||require("fs").readFileSync(e,"utf8")}catch(e){pug_rethrow(n,null,r)}var i=3,a=t.split("\n"),o=Math.max(r-i,0),h=Math.min(a.length,r+i),i=a.slice(o,h).map(function(n,e){var t=e+o+1;return(t==r?"  > ":"    ")+t+"| "+n}).join("\n");throw n.path=e,n.message=(e||"Pug")+":"+r+"\n"+i+"\n\n"+n.message,n}function listGroupItemTemplate(locals) {var pug_html = "", pug_mixins = {}, pug_interp;var pug_debug_filename, pug_debug_line;try {var pug_debug_sources = {".\\views\\component\u002Flist-group-item.pug":"each value in private\r\n    button(id='user'+value._id data-toggle='modal' data-target='#chat'+value._id).list-group-item.list-group-item-action.d-flex.pt-1.pb-1.align-items-center\r\n        span.fa.fa-user.fa-2x.mr-3\r\n        if value.chat    \r\n            .d-flex.flex-column.mr-auto\r\n                p.mb-0 #{value.nickname}\r\n                p.mb-0.small.text-truncate.text-truncate-custom #{value.chat[value.chat.length-1].text}\r\n        else\r\n            .d-flex.flex-column.mr-auto\r\n                p.mb-0 #{value.nickname}\r\n        span(id='badge'+value._id class='badge-'+status).badge-custom"};
+function pug_rethrow(n,e,r,t){if(!(n instanceof Error))throw n;if(!("undefined"==typeof window&&e||t))throw n.message+=" on line "+r,n;try{t=t||require("fs").readFileSync(e,"utf8")}catch(e){pug_rethrow(n,null,r)}var i=3,a=t.split("\n"),o=Math.max(r-i,0),h=Math.min(a.length,r+i),i=a.slice(o,h).map(function(n,e){var t=e+o+1;return(t==r?"  > ":"    ")+t+"| "+n}).join("\n");throw n.path=e,n.message=(e||"Pug")+":"+r+"\n"+i+"\n\n"+n.message,n}function listGroupItemTemplate(locals) {var pug_html = "", pug_mixins = {}, pug_interp;var pug_debug_filename, pug_debug_line;try {var pug_debug_sources = {".\\views\\component\u002Flist-group-item.pug":"each value in private\r\n    button(id='user'+value._id data-toggle='modal' data-target='#chat'+value._id).list-group-item.list-group-item-action.d-flex.pt-1.pb-1.align-items-center\r\n        span.fa.fa-user.fa-2x.mr-3\r\n        if value.chat    \r\n            .d-flex.flex-column.mr-auto\r\n                p.mb-0 #{value.nickname}\r\n                p.mb-0.small.text-truncate.text-truncate-custom #{value.chat[value.chat.length-1].text}\r\n        else\r\n            .d-flex.flex-column.mr-auto\r\n                p.mb-0 #{value.nickname}\r\n                p.mb-0.small.text-truncate.text-truncate-custom\r\n        span(id='badge'+value._id class='badge-'+status).badge-custom"};
 ;var locals_for_with = (locals || {});(function (private, status) {;pug_debug_line = 1;pug_debug_filename = ".\\views\\component\u002Flist-group-item.pug";
 // iterate private
 ;(function(){
@@ -36,9 +36,11 @@ pug_html = pug_html + "\u003Cdiv class=\"d-flex flex-column mr-auto\"\u003E";
 ;pug_debug_line = 10;pug_debug_filename = ".\\views\\component\u002Flist-group-item.pug";
 pug_html = pug_html + "\u003Cp class=\"mb-0\"\u003E";
 ;pug_debug_line = 10;pug_debug_filename = ".\\views\\component\u002Flist-group-item.pug";
-pug_html = pug_html + (pug_escape(null == (pug_interp = value.nickname) ? "" : pug_interp)) + "\u003C\u002Fp\u003E\u003C\u002Fdiv\u003E";
-}
+pug_html = pug_html + (pug_escape(null == (pug_interp = value.nickname) ? "" : pug_interp)) + "\u003C\u002Fp\u003E";
 ;pug_debug_line = 11;pug_debug_filename = ".\\views\\component\u002Flist-group-item.pug";
+pug_html = pug_html + "\u003Cp class=\"mb-0 small text-truncate text-truncate-custom\"\u003E\u003C\u002Fp\u003E\u003C\u002Fdiv\u003E";
+}
+;pug_debug_line = 12;pug_debug_filename = ".\\views\\component\u002Flist-group-item.pug";
 pug_html = pug_html + "\u003Cspan" + (pug_attr("class", pug_classes(['badge-'+status,"badge-custom"], [true,false]), false, false)+pug_attr("id", 'badge'+value._id, true, false)) + "\u003E\u003C\u002Fspan\u003E\u003C\u002Fbutton\u003E";
       }
   } else {
@@ -69,9 +71,11 @@ pug_html = pug_html + "\u003Cdiv class=\"d-flex flex-column mr-auto\"\u003E";
 ;pug_debug_line = 10;pug_debug_filename = ".\\views\\component\u002Flist-group-item.pug";
 pug_html = pug_html + "\u003Cp class=\"mb-0\"\u003E";
 ;pug_debug_line = 10;pug_debug_filename = ".\\views\\component\u002Flist-group-item.pug";
-pug_html = pug_html + (pug_escape(null == (pug_interp = value.nickname) ? "" : pug_interp)) + "\u003C\u002Fp\u003E\u003C\u002Fdiv\u003E";
-}
+pug_html = pug_html + (pug_escape(null == (pug_interp = value.nickname) ? "" : pug_interp)) + "\u003C\u002Fp\u003E";
 ;pug_debug_line = 11;pug_debug_filename = ".\\views\\component\u002Flist-group-item.pug";
+pug_html = pug_html + "\u003Cp class=\"mb-0 small text-truncate text-truncate-custom\"\u003E\u003C\u002Fp\u003E\u003C\u002Fdiv\u003E";
+}
+;pug_debug_line = 12;pug_debug_filename = ".\\views\\component\u002Flist-group-item.pug";
 pug_html = pug_html + "\u003Cspan" + (pug_attr("class", pug_classes(['badge-'+status,"badge-custom"], [true,false]), false, false)+pug_attr("id", 'badge'+value._id, true, false)) + "\u003E\u003C\u002Fspan\u003E\u003C\u002Fbutton\u003E";
     }
   }
