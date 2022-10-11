@@ -105,9 +105,6 @@ a:hover {
 }
 
 /*Chat page*/
-.chat-container {
-  height: calc(100vh - calc(100vh - 100%))
-}
 
 .chat-header {
   background-color:#3AAFA9;
@@ -115,7 +112,6 @@ a:hover {
   flex-direction:column;
   justify-content:end;
   color:white;
-  height:15vh;
 }
 .chat-header a  {
   color:white;
@@ -130,13 +126,12 @@ a:hover {
   border-left:1px solid #ccc;
   border-right:1px solid #ccc;
   border-bottom:1px solid #ccc;
-  height:43vh;
+  height:50vh;
   overflow-y:auto;
   overflow-x:hidden;
 
 }
 .chat-footer {
-  
   background-color:#3AAFA9;
   color:white;
 }
@@ -165,6 +160,10 @@ a:hover {
   .fa-user-circle-o-custom {
     font-size:4em;
   }
+  .chat-body {
+    height:65vh
+  }
+
 }
 
 

@@ -5,7 +5,7 @@ html
         .container
             .row
                 .offset-sm-2.col-sm-8.offset-md-0.col-md-6.offset-lg-1.col-lg-5.p-0
-                    header.chat-header
+                    header.chat-header.pt-4
                         div.d-flex.pl-4.pb-3
                             span.fa.fa-user-circle-o.fa-3x.mr-auto.fa-user-circle-o-custom
                             div.d-flex.flex-column.justify-content-end.mr-4
@@ -16,11 +16,10 @@ html
                     section.chat-body.pt-2.pb-2
                         .list-group.list-group-flush#user-list
                             include component/list-group-item.pug
-                    footer.chat-footer.p-2.d-flex
+                    footer.chat-footer.pl-3.pr-3.pt-2.pb-2.d-flex
                         a(href='/logout').mr-auto.mt-1
                             span.fa.fa-sign-out.fa-lg
                         span.fa.fa-lg.fa-search.mt-2
-                
 
 
         include component/modal.pug
