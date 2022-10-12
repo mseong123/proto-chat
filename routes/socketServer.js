@@ -34,20 +34,17 @@ function socketServer(io) {
         //read
         socket.on('read',async function(_id) {
             try {
-                console.log('here')
+                //update in DB all chat entries to unread:false
                 await UserModel.updateMany({_id:socket.request.user._id},
                     {$set:{'private.$[private].chat.$[].unread':false}},
                     {"arrayFilters":[{'private._id':_id}]}
                     )
-                    console.log('here2')
-                socket.emit('read',true)
+                    
+                socket.emit('read',_id,true)
             } catch (err) {
                 console.log('database error '+err)
                 socket.next(err)
             }
-            
-
-            
         })
         
         
@@ -78,7 +75,8 @@ function socketServer(io) {
                             nickname:corresponding_nickname,
                             chat:{
                                 text:msg,
-                                self:true
+                                self:true,
+                                
                                 }
                             }}
                         })

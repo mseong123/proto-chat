@@ -40,7 +40,7 @@ socket.on('disconnect',()=>{
     
       allSockets.forEach((innerSocket)=>{
         const user=document.getElementById("user"+innerSocket._id)
-
+        
         if (!user && innerSocket._id!==localUserInfo._id) { 
           //render pug template (using precompiled pug file from server side
           const listGroupItemHTML=listGroupItemTemplate({
@@ -68,6 +68,8 @@ socket.on('disconnect',()=>{
       })
     /*switch off for now due to ux issue on mobile*/
     //modalFocus();
+    read();
+
     })
 
     socket.on('offline',(_id)=>{
@@ -85,9 +87,21 @@ socket.on('disconnect',()=>{
       }
     })
 
-    socket.on('read',(done)=>{
+    socket.on('read',(_id,done)=>{
+      
+      const unreadMessage=$('#unreadMessage'+_id)
+      const unreadBadge=$('#unreadBadge'+_id)
+
+      unreadBadge.text('')
+      //if updated in db, done===true remove all unread elements
       if (done) {
         
+          if (unreadMessage.hasClass('font-weight-bold')) 
+            unreadMessage.removeClass('font-weight-bold')
+        
+          if (!unreadBadge.hasClass('d-none')) 
+            unreadBadge.addClass('d-none')
+
       }
     })
 
@@ -124,8 +138,29 @@ socket.on('disconnect',()=>{
         $('#chat'+_id).find('.modal-body').append(chatHTML)
       }
 
+    
+    
+    if (!self) {
+      const unreadMessage=$('#unreadMessage'+_id)
+      const unreadBadge=$('#unreadBadge'+_id)
 
-    $('#user'+_id).find('.text-truncate-custom').text(msg)
+      unreadMessage.text(msg)
+      if (!unreadMessage.hasClass('font-weight-bold')) 
+      unreadMessage.addClass('font-weight-bold')
+  
+      if (unreadBadge.hasClass('d-none')) {
+        unreadBadge.removeClass('d-none')
+      }
+      let count=parseInt(unreadBadge.text()) || 0
+
+      if (!unreadBadge.hasClass('d-none')) {
+        unreadBadge.text(count +1)
+      }
+
+    }
+    
+      
+
   })
 
 
@@ -168,15 +203,19 @@ function modalFocus() {
 /*switch off for now due to ux issue on mobile*/
 //modalFocus();
 
-//set all modals to send socket event 'read' when modal is clicked on and to clear unread elements in associated list-group-item
-$('.modal').each(function(i,element){
-  const _id=$(element).attr('id').match(/(?<=chat).*/)[0]
-
-  $(element).on('shown.bs.modal', function () {
-    socket.emit('read',_id)
-
+//set all modals to send socket event 'read' when modal is clicked and server will update all chat entries to read
+function read() {
+  $('.modal').each(function(i,element){
+    const _id=$(element).attr('id').match(/(?<=chat).*/)[0]
+    
+    $(element).on('shown.bs.modal', function () {
+      socket.emit('read',_id)
+    })
   })
-})
+}
+
+read();
+
 
 
 
