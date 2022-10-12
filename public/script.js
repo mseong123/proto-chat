@@ -87,24 +87,38 @@ socket.on('disconnect',()=>{
 
     //one handler for both own and corresponding msg
     socket.on('private message',(_id,self,msg)=>{
-      let html;
-      
+      let lastDate=new Date($('#chat'+_id).find('.modal-body .date:last').text());
+      let currentDate=new Date(new Date().getDate()+' '+new Date().toLocaleString('default', { month: 'long' }).substring(0,3)+' '+new Date().getFullYear().toString().substr(-2));
+      let chatHTML;
+      let dateHTML=cardDateTemplate({
+        currentDate
+      })
+
       if (self) {
-        html=cardSelfTemplate({
+        chatHTML=cardSelfTemplate({
           value:{
             text:msg,
             time:new Date()}
         })
         
-    } else {
-      html=cardNotSelfTemplate({
-        value:{
-          text:msg,
-          time:new Date()}
-      })
-    }
+      } else {
+        chatHTML=cardNotSelfTemplate({
+          value:{
+            text:msg,
+            time:new Date()}
+        })
+      }
 
-    $('#chat'+_id).find('.modal-body').append(html)
+      if (currentDate.getTime()===lastDate.getTime()) {
+        //if last chat falls on same day, no new day card
+        $('#chat'+_id).find('.modal-body').append(chatHTML)
+      } else {
+        //else append a new date card
+        $('#chat'+_id).find('.modal-body').append(dateHTML)
+        $('#chat'+_id).find('.modal-body').append(chatHTML)
+      }
+
+
     $('#user'+_id).find('.text-truncate-custom').text(msg)
   })
 

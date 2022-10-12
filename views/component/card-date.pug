@@ -1,0 +1,5 @@
+// .date class is for jquery .find()
+.d-flex.justify-content-center.date
+    .card.card-custom-3
+        .card-body.d-flex.card-body-custom
+            p.mb-0 #{currentDate.getDate()+' '+currentDate.toLocaleString('default', { month: 'long' }).substring(0,3)+' '+currentDate.getFullYear().toString().substr(-2)}  
