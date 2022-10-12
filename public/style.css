@@ -108,8 +108,8 @@ a:hover {
 .badge-custom {
   border-radius:50%;
   background-color:black;
-  width:10px;
-  height:10px
+  width:8px;
+  height:8px
 }
 .badge-custom.badge-success {
   background-color:#32CD32;
