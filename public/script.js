@@ -63,7 +63,7 @@ socket.on('disconnect',()=>{
     
         else {
           $('#submit'+innerSocket._id).attr('data-socket',innerSocket.socketID)
-          $('#badge'+innerSocket._id).removeClass('badge-primary').addClass('badge-success').html('online');
+          $('#badge'+innerSocket._id).addClass('badge-success')
         }
       })
     /*switch off for now due to ux issue on mobile*/
@@ -74,13 +74,19 @@ socket.on('disconnect',()=>{
       const user = document.getElementById("user"+_id)
       const firstChatMessage=$('#chat'+_id).find('.card:first')
       if (user && firstChatMessage[0]) {
-        $("#badge"+_id).removeClass('badge-success').addClass('badge-primary').html('offline');
+        $("#badge"+_id).removeClass('badge-success');
       }
       else {
         $("#user"+_id).remove();
         $("chat"+_id).on('hidden.bs.modal',function(){
           $("#chat"+_id).remove();
         })
+        
+      }
+    })
+
+    socket.on('read',(done)=>{
+      if (done) {
         
       }
     })
@@ -161,6 +167,17 @@ function modalFocus() {
 
 /*switch off for now due to ux issue on mobile*/
 //modalFocus();
+
+//set all modals to send socket event 'read' when modal is clicked on and to clear unread elements in associated list-group-item
+$('.modal').each(function(i,element){
+  const _id=$(element).attr('id').match(/(?<=chat).*/)[0]
+
+  $(element).on('shown.bs.modal', function () {
+    socket.emit('read',_id)
+
+  })
+})
+
 
 
 

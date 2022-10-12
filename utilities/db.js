@@ -1,5 +1,4 @@
 const mongoose=require('mongoose')
-const moment = require('moment-timezone');
 
 
 const chatSchema=new mongoose.Schema({
@@ -13,7 +12,8 @@ const chatSchema=new mongoose.Schema({
         time:{
             type:Date,
             default:Date.now
-        }
+        },
+        unread:Boolean,
         }],
     }
 )

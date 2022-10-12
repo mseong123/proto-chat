@@ -31,6 +31,24 @@ function socketServer(io) {
             io.emit('offline',socket.request.user._id)
         })
 
+        //read
+        socket.on('read',async function(_id) {
+            try {
+                console.log('here')
+                await UserModel.updateMany({_id:socket.request.user._id},
+                    {$set:{'private.$[private].chat.$[].unread':false}},
+                    {"arrayFilters":[{'private._id':_id}]}
+                    )
+                    console.log('here2')
+                socket.emit('read',true)
+            } catch (err) {
+                console.log('database error '+err)
+                socket.next(err)
+            }
+            
+
+            
+        })
         
         
         
@@ -70,7 +88,7 @@ function socketServer(io) {
                 if (correspondingChat) {
                     
                     await UserModel.findByIdAndUpdate(corresponding_id,
-                        {$push:{'private.$[private].chat':{text:msg,self:false}}},
+                        {$push:{'private.$[private].chat':{text:msg,self:false,unread:true}}},
                         {"arrayFilters":[{'private._id':socket.request.user._id}]}
                         )
                     }
@@ -81,7 +99,8 @@ function socketServer(io) {
                             nickname:socket.request.user.nickname,
                             chat:{
                                 text:msg,
-                                self:false
+                                self:false,
+                                unread:true
                                 }
                             }}
                         })
