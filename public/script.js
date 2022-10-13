@@ -164,20 +164,24 @@ function formOnClick(e) {
   const corresponding_socket_id=$(target).attr('data-socket');
   const corresponding_id=target.id.match(/(?<=submit).*/)[0];
   const corresponding_nickname=$('#chat'+corresponding_id).find('#header-nickname').text().trim();
+  const modalBody=$('#chat'+corresponding_id).find('.modal-body')
   
   const msg = $('#input'+corresponding_id).val()
-  
+  $("#input"+corresponding_id).val('')
+  modalBody.animate({ scrollTop: modalBody[0].scrollHeight}, 300);
   socket.emit('private message',corresponding_socket_id,corresponding_id,corresponding_nickname,msg);
 
 }
 
 function formOnSubmit(e) {
   e.preventDefault()
-
-  const corresponding_id=e.currentTarget.id.match(/(?<=form).*/)[0];
   
+  const corresponding_id=e.currentTarget.id.match(/(?<=form).*/)[0];
+  const modalBody=$('#chat'+corresponding_id).find('.modal-body')
     $("#submit"+corresponding_id).click();
-    $("#input"+corresponding_id).val('')
+    $("#input"+corresponding_id).val('');
+    modalBody.animate({ scrollTop: modalBody[0].scrollHeight}, 300);
+    
 }
 
 
