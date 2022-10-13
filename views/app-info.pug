@@ -6,16 +6,19 @@ html
             .row
                 .offset-sm-2.col-sm-8.offset-md-3.col-md-6.offset-lg-3.col-lg-5.p-0
                     .jumbotron
+                        a(href='/chat') back
                         header
                             h1.display-5 App description 
-                            p.lead Simple chat app built to mimic normal chat applications.
+                            p.lead Simple chat app built to mimic normal chat applications. Interface optimised for user experience.
                             hr
                             ul 
-                                li Option to use Google or Facebook to login.
+                                li  Google or Facebook login option.
                                 <br>
                                 li. 
-                                    Other users will appear in Dashboard when they login OR if they already have an existing chat with 
-                                    the current user.
+                                    Other Users will appear in Dashboard when they login OR if they already have an existing chat with 
+                                    the current User.
+                                <br>
+                                li Support multiple concurrent Users.
                                 <br>
                                 li *In order to test the app, suggest a minimum of 2 users logging in from different browser/devices.
                                 <br>
@@ -26,23 +29,40 @@ html
                                         <br>
                                         li Notification of unread messages will appear when messages are pushed but not read.
                                         <br>
-                                        li Messages can be sent when other users are offline (will appear as unread messages)
+                                        li Messages can be sent when other Users are offline (will appear as unread messages).
                                         <br>
                             
                             h1.display-5 Technology Stack 
                             hr
                             p.lead Front-End
                             ul
-                                li Native HTML,CSS and JS (server side rendered using PUG template engine)
+                                li. 
+                                    Native HTML,CSS and JS (server-side rendered using PUG template engine). Pug 
+                                    compiled functions i.e. modalTemplate.js (compiled using Pug-CLI) are used in scripts on client 
+                                    side to ensure code reusability and to simplify development. 
                                 <br>
-                                li Bootstrap Framework for styling
+                                li Bootstrap for styling.
                                 <br>
-                                li Socket.io Framework for websocket interface 
+                                li Socket.io on client side.
                                 <br>
                             p.lead Back-End
-                                li NodeJS (Javascript runtime web server), ExpressJS Framework (lightweight framework for NodeJS)
+                            ul
+                                li NodeJS and ExpressJS.
                                 <br>
-                                li MongooseJS (Object Data Modelling and connector for MongoDB database)
+                                li Socket.io for websocket interface to enable real time chat messaging. 
+                                <br>
+                                li MongooseJS (Object Data Modelling and connector for MongoDB database). 
+                                <br>
+                            p.lead Database
+                            ul
+                                li MongoDB Atlas (Document-based NoSQL database).
+                                <br>
+                            p.lead Authentication
+                            ul
+                                li PassportJS for OAuth 2.0 federated authentication (Google and Facebook login).
+                                <br>
+                                li Express-SessionJS for managing user sessions and authentication.
+
 
 
                             
