@@ -40,7 +40,7 @@ function socketServer(io) {
                     {"arrayFilters":[{'private._id':_id}]}
                     )
                     
-                socket.emit('read',_id,true)
+                socket.emit('read',_id)
             } catch (err) {
                 console.log('database error '+err)
                 socket.next(err)

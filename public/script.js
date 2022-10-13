@@ -66,9 +66,8 @@ socket.on('disconnect',()=>{
           $('#badge'+innerSocket._id).addClass('badge-success')
         }
       })
-    /*switch off for now due to ux issue on mobile*/
-    //modalFocus();
-    read();
+    //re-attach modal handlers for newly rendered modals
+    modalShown();
 
     })
 
@@ -87,23 +86,20 @@ socket.on('disconnect',()=>{
       }
     })
 
-    socket.on('read',(_id,done)=>{
+    socket.on('read',(_id)=>{
       
       const unreadMessage=$('#unreadMessage'+_id)
       const unreadBadge=$('#unreadBadge'+_id)
 
       unreadBadge.text('')
-      //if updated in db, done===true remove all unread elements
-      if (done) {
-        
+      //remove all unread elements
           if (unreadMessage.hasClass('font-weight-bold')) 
             unreadMessage.removeClass('font-weight-bold')
         
           if (!unreadBadge.hasClass('d-none')) 
             unreadBadge.addClass('d-none')
-
       }
-    })
+    )
 
     //one handler for both own and corresponding msg
     socket.on('private message',(_id,self,msg)=>{
@@ -137,30 +133,26 @@ socket.on('disconnect',()=>{
         $('#chat'+_id).find('.modal-body').append(dateHTML)
         $('#chat'+_id).find('.modal-body').append(chatHTML)
       }
+    
+    const unreadMessage=$('#unreadMessage'+_id)
+    unreadMessage.text(msg)
 
-    
-    
+    //if message from corresponding update and show unread elements (unreadMessage and unreadBadge)
     if (!self) {
-      const unreadMessage=$('#unreadMessage'+_id)
+      
       const unreadBadge=$('#unreadBadge'+_id)
+      let count=parseInt(unreadBadge.text()) || 0
 
-      unreadMessage.text(msg)
+      console.log(parseInt(unreadBadge.text()))
+
       if (!unreadMessage.hasClass('font-weight-bold')) 
       unreadMessage.addClass('font-weight-bold')
   
       if (unreadBadge.hasClass('d-none')) {
         unreadBadge.removeClass('d-none')
       }
-      let count=parseInt(unreadBadge.text()) || 0
-
-      if (!unreadBadge.hasClass('d-none')) {
-        unreadBadge.text(count +1)
-      }
-
+      unreadBadge.text(count+=1)
     }
-    
-      
-
   })
 
 
@@ -188,33 +180,24 @@ function formOnSubmit(e) {
     $("#input"+corresponding_id).val('')
 }
 
-//set all modals to auto focus on text input when open
-function modalFocus() {
-  $('.modal').each(function(i,element){
-    const _id=$(element).attr('id').match(/(?<=chat).*/)[0]
-    $(element).on('shown.bs.modal', function () {
-      let modalBody=$(element).find('.modal-body')
-      modalBody.animate({ scrollTop: modalBody.height()}, 500);
-      $("#input"+_id).focus();
-    })
-  })
-}
 
-/*switch off for now due to ux issue on mobile*/
-//modalFocus();
-
-//set all modals to send socket event 'read' when modal is clicked and server will update all chat entries to read
-function read() {
+function modalShown() {
   $('.modal').each(function(i,element){
     const _id=$(element).attr('id').match(/(?<=chat).*/)[0]
     
     $(element).on('shown.bs.modal', function () {
+      //all modals to send socket event 'read' when modal is clicked and server will update all chat entries to read
       socket.emit('read',_id)
+      //auto scroll to bottom when modal is open
+      let modalBody=$(element).find('.modal-body')
+      modalBody.animate({ scrollTop: modalBody.height()}, 500);
+      //auto focus on text input when open. Switch off for now due to ux issue on mobile
+      //$("#input"+_id).focus();
     })
   })
 }
 
-read();
+modalShown();
 
 
 
