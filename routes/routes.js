@@ -72,6 +72,14 @@ function routes(app) {
         })
     })
 
+    app.get('/app-info',(req,res,next)=>{
+        
+        res.render('app-info',function(err,html){
+            if (err) next(err)
+            res.send(html);
+        })
+    })
+
     app.get('/logout',(req,res,next)=>{
         req.logout(function(err){
             if (err) next(err) 

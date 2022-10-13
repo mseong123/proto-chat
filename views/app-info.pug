@@ -1,0 +1,48 @@
+doctype html
+html
+    include shared/head.pug
+    body
+        .container
+            .row
+                .offset-sm-2.col-sm-8.offset-md-3.col-md-6.offset-lg-3.col-lg-5.p-0
+                    .jumbotron
+                        header
+                            h1.display-5 App description 
+                            p.lead Simple chat app built to mimic normal chat applications.
+                            hr
+                            ul 
+                                li Option to use Google or Facebook to login.
+                                <br>
+                                li. 
+                                    Other users will appear in Dashboard when they login OR if they already have an existing chat with 
+                                    the current user.
+                                <br>
+                                li *In order to test the app, suggest a minimum of 2 users logging in from different browser/devices.
+                                <br>
+                                li Real time messaging:
+                                <br>
+                                    ul 
+                                        li Messages pushed to users in real time.
+                                        <br>
+                                        li Notification of unread messages will appear when messages are pushed but not read.
+                                        <br>
+                                        li Messages can be sent when other users are offline (will appear as unread messages)
+                                        <br>
+                            
+                            h1.display-5 Technology Stack 
+                            hr
+                            p.lead Front-End
+                            ul
+                                li Native HTML,CSS and JS (server side rendered using PUG template engine)
+                                <br>
+                                li Bootstrap Framework for styling
+                                <br>
+                                li Socket.io Framework for websocket interface 
+                                <br>
+                            p.lead Back-End
+                                li NodeJS (Javascript runtime web server), ExpressJS Framework (lightweight framework for NodeJS)
+                                <br>
+                                li MongooseJS (Object Data Modelling and connector for MongoDB database)
+
+
+                            

@@ -32,11 +32,6 @@ a:hover {
 .login-header img {
   height:14vh;
 }
-.login-header h3 {
-  text-shadow:2px 2px 5px grey;
-
-}
-
 
 .btn-custom {
   color:white;
@@ -85,6 +80,10 @@ a:hover {
 }
 .chat-header a  {
   color:white;
+}
+
+.dropdown-menu-custom a {
+  color:black;
 }
 .chat-nickname {
   border-left:1px solid #ccc;
@@ -182,6 +181,13 @@ a:hover {
 
 .card-body-custom {
   padding:0.3rem;
+}
+
+/*app info*/
+.display-5 {
+  font-size: 2.5rem;
+  font-weight: 300;
+  line-height: 1.2;
 }
 
 

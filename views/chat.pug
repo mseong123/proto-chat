@@ -8,9 +8,11 @@ html
                     header.chat-header.pt-4
                         div.d-flex.pl-4.pb-3
                             span.fa.fa-user-circle-o.fa-3x.mr-auto.fa-user-circle-o-custom
-                            div.d-flex.flex-column.justify-content-end.mr-4
-                                a(href='#')
+                            div.d-flex.flex-column.justify-content-end.mr-4.dropdown
+                                a(href='' data-toggle='dropdown')
                                     span.fa.fa-cog.fa-lg
+                                div.dropdown-menu.dropdown-menu-right.dropdown-menu-custom
+                                    a(href='/app-info').dropdown-item App Info                             
                     section.chat-nickname.d-flex.justify-content-end.pt-2.pb-2
                         h5.mr-3.mb-0 #{nickname}
                     section.chat-body.pt-2.pb-2
@@ -26,6 +28,7 @@ html
 
         script(src='/socket.io/socket.io.js')
         script(src='https://code.jquery.com/jquery-3.3.1.min.js')
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js")
         script(src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js")
         script(src='/public/list-group-item.js')
         script(src='/public/modal.js')
