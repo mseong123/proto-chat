@@ -32,6 +32,9 @@ a:hover {
 .login-header img {
   height:14vh;
 }
+.login-header h3 {
+  text-shadow:2px 2px 5px grey;
+}
 
 .btn-custom {
   color:white;
