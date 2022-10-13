@@ -190,7 +190,8 @@ function modalShown() {
       socket.emit('read',_id)
       //auto scroll to bottom when modal is open
       let modalBody=$(element).find('.modal-body')
-      modalBody.animate({ scrollTop: modalBody.height()}, 500);
+      modalBody.animate({ scrollTop: modalBody[0].scrollHeight}, 300);
+      console.log(modalBody.height())
       //auto focus on text input when open. Switch off for now due to ux issue on mobile
       //$("#input"+_id).focus();
     })
