@@ -54,6 +54,7 @@ socket.on('disconnect',()=>{
               _id:innerSocket._id,
               socketID:innerSocket.socketID,
               nickname:innerSocket.nickname,
+              profilePic:innerSocket.profilePic,
               chat:[]
             }]
           })

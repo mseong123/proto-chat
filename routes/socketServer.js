@@ -20,6 +20,8 @@ function socketServer(io) {
                     offline chat happens using _id and nickname.*/
                     socketID:innerSocket.id,
                     nickname:innerSocket.request.user.nickname,
+                    //provide a default pic if no history of chat
+                    profilePic:'/user-default1.png'
                 }
             })
             io.emit('online',allSocketIDandNickname)
