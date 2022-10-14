@@ -46,7 +46,24 @@ function socketServer(io) {
                 socket.next(err)
             }
         })
-        
+
+        socket.on('nickname',async function(_id,new_nickname){
+            try{
+                //update own socket emitter user details in db
+                await UserModel.findOneAndUpdate({_id:_id},{nickname:new_nickname});
+
+                //update other user's detail with new nickname
+                await UserModel.updateMany({},
+                    {$set:{'private.$[private].nickname':new_nickname}},
+                    {"arrayFilters":[{'private._id':_id}]}
+                    )
+                //only when successful then emit
+                socket.emit('nickname',_id,new_nickname)
+            }   catch (err) {
+                console.log('database error '+err)
+                socket.next(err)
+            }
+        })
         
         
         //private message
@@ -114,12 +131,7 @@ function socketServer(io) {
                 console.log('database error '+err)
                 socket.next(err)
             }
-            
-
-
           });
-        
-
     }
     )
 }

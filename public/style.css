@@ -94,6 +94,9 @@ a:hover {
   border-bottom:1px solid #ccc;
   box-shadow:0px 2px 2px #ccc;
 }
+.chat-nickname a {
+  color:grey;
+}
 .chat-body {
   border-left:1px solid #ccc;
   border-right:1px solid #ccc;

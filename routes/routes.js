@@ -61,6 +61,7 @@ function routes(app) {
         
         res.render('chat',{
             message,
+            _id:req.user._id,
             nickname:req.user.nickname,
             private:req.user.private,
             

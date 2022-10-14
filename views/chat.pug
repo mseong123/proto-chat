@@ -11,9 +11,18 @@ html
                             div.d-flex.flex-column.justify-content-end.mr-4.dropdown
                                 a(href='' data-toggle='dropdown')
                                     span.fa.fa-cog.fa-lg
-                                div.dropdown-menu.dropdown-menu-right.dropdown-menu-custom
+                                .dropdown-menu.dropdown-menu-right.dropdown-menu-custom
                                     a(href='/app-info').dropdown-item App Info                             
                     section.chat-nickname.d-flex.justify-content-end.pt-2.pb-2
+                        .dropdown.mr-3
+                            a(href='' data-toggle='dropdown')
+                                span.fa.fa-ellipsis-v
+                            .dropdown-menu.dropdown-menu-right
+                                form(onsubmit="nicknameFormOnSubmit(event)" id='nicknameForm'+_id).px-3.py-3
+                                    .form-group
+                                        label(for="nickname").sr-only Change Nickname
+                                        input(type='text' required placeholder='New Nickname' id="newNickname"+_id).form-control
+                                    button(type='submit' onclick='nicknameFormOnClick(event)' id='nicknameSubmit'+_id).btn.btn-dark Change
                         h5.mr-3.mb-0 #{nickname}
                     section.chat-body.pt-2.pb-2
                         .list-group.list-group-flush#user-list

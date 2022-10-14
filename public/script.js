@@ -101,6 +101,10 @@ socket.on('disconnect',()=>{
       }
     )
 
+    socket.on('nickname',(_id,new_nickname)=>{
+      $('.chat-nickname').find('h5').text(new_nickname)
+    })
+
     //one handler for both own and corresponding msg
     socket.on('private message',(_id,self,msg)=>{
       let lastDate=new Date($('#chat'+_id).find('.modal-body .date:last').text());
@@ -170,7 +174,16 @@ function formOnClick(e) {
   $("#input"+corresponding_id).val('')
   modalBody.animate({ scrollTop: modalBody[0].scrollHeight}, 300);
   socket.emit('private message',corresponding_socket_id,corresponding_id,corresponding_nickname,msg);
+}
 
+function nicknameFormOnClick(e) {
+  e.preventDefault()
+  
+  let target=e.currentTarget || e.target
+  const _id=target.id.match(/(?<=nicknameSubmit).*/)[0];
+  const new_nickname=$('#newNickname'+_id).val();
+  $("#newNickname"+_id).val('')
+  socket.emit('nickname',_id,new_nickname)
 }
 
 function formOnSubmit(e) {
@@ -183,6 +196,17 @@ function formOnSubmit(e) {
     modalBody.animate({ scrollTop: modalBody[0].scrollHeight}, 300);
     
 }
+
+function nicknameFormOnSubmit(e) {
+  e.preventDefault()
+  
+  const _id=e.currentTarget.id.match(/(?<=nicknameForm).*/)[0];
+  
+    $("#nicknameSubmit"+_id).click();
+    $("#newNickname"+corresponding_id).val('');
+}
+
+
 
 
 function modalShown() {
