@@ -20,7 +20,9 @@ function socketServer(io) {
                     offline chat happens using _id and nickname.*/
                     socketID:innerSocket.id,
                     nickname:innerSocket.request.user.nickname,
-                    //provide a default pic if no history of chat
+                    /*if next time implement profile pic upload feature, do the following*/
+                    //profilePic:innerSocket.request.user.profilePic,
+                    /*for now just keep it consistent with other user-default1.png*/
                     profilePic:'/user-default1.png'
                 }
             })
