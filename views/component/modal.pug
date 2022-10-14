@@ -3,8 +3,9 @@ each value in private
         .modal-dialog 
             .modal-content.modal-content-custom
                 .modal-header.modal-header-custom
+                    .profile-pic-modal.mr-3
+                        img(style='vertical-align:middle' src='public/profile-pic'+value.profilePic).img-fluid
                     //-becareful in amending the following id #header-nickname, .text() needed in db operation under 'private message' 
-                    span(style='vertical-align:middle').fa.fa-2x.fa-user-circle.mr-3
                     h5.mb-0#header-nickname #{value.nickname}     
                     button(type='button' data-dismiss='modal').close
                         span.fa.fa-arrow-left.fa-arrow.left-custom
